@@ -101,6 +101,12 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual(result['status'], 'up-to-date')
         self.assertEqual(self.published.read_bytes(), self.original)
 
+    def test_same_day_rebuild_cannot_erase_known_rankings(self):
+        previous = snapshot()
+        previous['markets'][0]['ranks'] = [{'rank': 1, 'long': 10, 'short': 8}]
+        with self.assertRaisesRegex(ValueError, 'same-day rankings'):
+            daily.validate_snapshot(snapshot(), previous['asOf'], previous)
+
     def test_invalid_data_and_coverage_regression(self):
         good = snapshot()
         mutations = [lambda x: x['markets'].pop(),

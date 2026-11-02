@@ -83,6 +83,8 @@ def validate_snapshot(data, day, previous=None, history_start=None):
         if dates != sorted(set(dates)):
             raise ValueError(f"{m['code']}: duplicate/unsorted historical dates.")
         prior = previous_markets.get(m['code'])
+        if prior and previous['asOf'] == day and prior['main']['contract'].lower() == main['contract'].lower() and prior.get('ranks') and not m.get('ranks'):
+            raise ValueError(f"{m['code']}: lost previously validated same-day rankings.")
         if prior and prior['main']['contract'].lower() == main['contract'].lower():
             known_dates = {b['date'] for b in prior['history'] if history_start <= b['date'] <= day}
             missing_known = known_dates - set(dates)
@@ -125,7 +127,7 @@ def build_candidate(stage, day, start, run=run_script):
     if dce.get('coverage', {}).get('errors'):
         raise ValueError('Some DCE products failed; refusing a partial publication: ' +
                          json.dumps(dce['coverage']['errors'], ensure_ascii=False))
-    for name in ['merge_exchanges.py', 'analyze_markets.py', 'check_analysis.py']:
+    for name in ['merge_exchanges.py', 'source_rank_fallback.py', 'analyze_markets.py', 'check_analysis.py']:
         run(stage, name)
     return json.loads((stage / 'dist/data.json').read_text(encoding='utf-8'))
 

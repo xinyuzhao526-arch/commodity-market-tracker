@@ -69,6 +69,10 @@ jobs:
           if [ -n "$TARGET_DATE" ]; then args+=(--as-of "$TARGET_DATE"); fi
           if [ "$REBUILD" = "true" ]; then args+=(--rebuild); fi
           python scripts/refresh_daily.py "${args[@]}"
+      - name: Recheck missing rankings when close is already published
+        id: rank_fallback
+        if: github.event_name != 'push' && steps.refresh.outputs.changed != 'true'
+        run: python scripts/source_rank_fallback.py --refresh --only-if-filled
       - name: Save validated source cache
         if: always()
         uses: actions/cache/save@v4
@@ -78,7 +82,7 @@ jobs:
       - name: Build offline HTML
         run: python scripts/export_html.py --output dist/guanlan.html
       - name: Commit the complete snapshot
-        if: steps.refresh.outputs.changed == 'true'
+        if: steps.refresh.outputs.changed == 'true' || steps.rank_fallback.outputs.changed == 'true'
         env:
           SNAPSHOT_DATE: ${{ steps.refresh.outputs.as_of }}
         run: |
