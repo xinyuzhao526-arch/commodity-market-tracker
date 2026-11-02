@@ -40,14 +40,14 @@ function terminalInit(){
 function terminalMatrix(){
  const header=$('#research-table-title');if(!header||header.closest('.matrix-workspace'))return;
  const toolbar=header.nextElementSibling,panel=toolbar?.nextElementSibling,stats=$('#app .stats-grid');if(!toolbar||!panel||!stats)return;
- const section=document.createElement('section');section.className='matrix-workspace';stats.insertAdjacentElement('afterend',section);section.append(header,toolbar,panel);
+ const section=document.createElement('section');section.className='matrix-workspace';(document.querySelector('#deviation-watch')||stats).insertAdjacentElement('afterend',section);section.append(header,toolbar,panel);
  const table=section.querySelector('table');if(table)table.setAttribute('aria-label','横截面研究矩阵');
  const detail=$('#research-detail');if(detail)detail.classList.add('terminal-inspector');
  const methods=$('#research-method');if(methods&&!methods.closest('details')){const fold=document.createElement('details');fold.className='terminal-methods';fold.innerHTML='<summary><span>指标定义与判定规则</span><small>收益口径 / 价仓联动 / 席位边界</small><span>＋</span></summary>';methods.insertAdjacentElement('beforebegin',fold);fold.append(methods)}
  if($('#jump-research-method'))$('#jump-research-method').onclick=e=>{e.preventDefault();const fold=$('#research-method').closest('details');if(fold)fold.open=true;$('#research-method').scrollIntoView({behavior:'smooth',block:'start'})};
 }
 const terminalHeadingBase=heading;
-heading=function(title,sub,kicker){const titles={research:'研究雷达',overview:'市场概览',trends:'趋势全景',positions:'持仓结构',sources:'数据与方法'};const subs={research:'横截面强弱、量价参与度与席位证据',overview:'收盘价格、成交与持仓变化',trends:'固定合约趋势状态与跨品种比较',positions:'会员排名、样本差与持仓集中度',sources:'数据覆盖、计算口径与可用性'};return terminalHeadingBase(titles[state.view]||title,subs[state.view]||sub,kicker)};
+heading=function(title,sub,kicker){const titles={research:'研究雷达',overview:'市场概览',trends:'趋势全景',positions:'持仓结构',sources:'数据与方法'};const subs={research:'均值偏离观察、横截面强弱与历史席位证据',overview:'收盘价格、成交与持仓变化',trends:'固定合约趋势状态与跨品种比较',positions:'会员排名、样本差与持仓集中度',sources:'数据覆盖、计算口径与可用性'};return terminalHeadingBase(titles[state.view]||title,subs[state.view]||sub,kicker)};
 function terminalSync(){
  terminalInit();if(terminalPrefs.previousView!==state.view)closeInspector();terminalPrefs.previousView=state.view;
  $('#side-date').textContent=DATA.asOf;$('#terminal-date').textContent=DATA.asOf+' / 收盘';$('#terminal-date').title='数据快照日期 '+DATA.asOf+'，非实时行情';

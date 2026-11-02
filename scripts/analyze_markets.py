@@ -25,6 +25,30 @@ def chain_sector(m):
     if m['sector'] in ('黑色金属','黑色建材'): return '黑色 / 建材'
     return m['sector']
 
+def deviation_watch(a, last):
+    """A descriptive screen, independent of seat availability or trend alignment."""
+    distance=a.get('distanceAtr20')
+    if not finite(distance) or abs(distance)<2:
+        return None
+    above=distance>0
+    day=a.get('return1')
+    retracing=finite(day) and (day<0 if above else day>0)
+    boundary=a.get('priorHigh20' if above else 'priorLow20')
+    reentry=bool(last and finite(boundary) and finite(last.get('high' if above else 'low')) and
+                 (last['high']>boundary and last['close']<boundary if above else
+                  last['low']<boundary and last['close']>boundary))
+    observations=[]
+    if retracing: observations.append('当日收盘低于昨收' if above else '当日收盘高于昨收')
+    if reentry: observations.append('盘中越过前20日高点后收回区间' if above else '盘中越过前20日低点后收回区间')
+    return {'side':'above' if above else 'below',
+            'label':'上方偏离' if above else '下方偏离',
+            'focus':'关注回调风险' if above else '关注反弹可能',
+            'retracing':retracing,'rangeReentry':reentry,'observations':observations,
+            'priceCue':('当日回落' if above else '当日反弹') if retracing else
+                       '昨收比较缺失' if not finite(day) else '暂未出现反向收盘',
+            'caveat':'偏离可能通过横盘或均线移动收敛；尚不能确认趋势反转。'}
+
+
 def derive(m, calendar):
     end=m['main']['date']; dates=[d for d in calendar if d<=end]
     history={h['date']:h for h in m['history'] if h.get('contract')==m['main']['contract'] and positive(h.get('close')) and h['date']<=end}
@@ -69,6 +93,7 @@ def derive(m, calendar):
         a['atr14']=avg(tr)
     a['natr14']=a['atr14']/last['close']*100 if last and finite(a['atr14']) else None
     a['distanceAtr20']=(last['close']-a['ma20'])/a['atr14'] if last and positive(a['atr14']) and finite(a['ma20']) else None
+    a['deviationWatch']=deviation_watch(a,last)
     a['fixedOiChange']=last['oi']-prev['oi'] if last and prev and finite(last.get('oi')) and finite(prev.get('oi')) else None
     p,oi=sign(a['return1']),sign(a['fixedOiChange'])
     quadrant={(1,1):'涨价增仓',(-1,1):'跌价增仓',(1,-1):'涨价减仓',(-1,-1):'跌价减仓'}
