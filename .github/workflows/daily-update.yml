@@ -58,6 +58,7 @@ jobs:
           python scripts/check_analysis.py
           node scripts/check_scatter.cjs
           node scripts/check_domestic_research.cjs
+          python scripts/check_live_fundamentals.py
           python -m unittest discover -s tests -v
       - name: Fetch and validate all exchanges
         id: refresh
@@ -75,6 +76,13 @@ jobs:
         id: rank_fallback
         if: github.event_name != 'push' && steps.refresh.outputs.changed != 'true'
         run: python scripts/source_rank_fallback.py --refresh --only-if-filled
+      - name: Refresh physical inventory and domestic supply series
+        id: fundamentals
+        if: github.event_name != 'push'
+        run: |
+          python scripts/source_live_fundamentals.py
+          python scripts/install_terminal_ui.py
+          python scripts/check_live_fundamentals.py
       - name: Save validated source cache
         if: always()
         uses: actions/cache/save@v4
@@ -84,15 +92,15 @@ jobs:
       - name: Build offline HTML
         run: python scripts/export_html.py --output dist/guanlan.html
       - name: Commit the complete snapshot
-        if: steps.refresh.outputs.changed == 'true' || steps.rank_fallback.outputs.changed == 'true'
+        if: steps.refresh.outputs.changed == 'true' || steps.rank_fallback.outputs.changed == 'true' || steps.fundamentals.outputs.changed == 'true'
         env:
           SNAPSHOT_DATE: ${{ steps.refresh.outputs.as_of }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dist/data.json
+          git add dist/data.json dist/fundamentals.json dist/app.js dist/style.css
           git diff --cached --quiet && exit 0
-          git commit -m "data: update commodity close $SNAPSHOT_DATE"
+          git commit -m "data: refresh commodity and physical fundamentals $SNAPSHOT_DATE"
           git push origin HEAD:${{ github.event.repository.default_branch }}
       - name: Downloadable offline dashboard
         uses: actions/upload-artifact@v4

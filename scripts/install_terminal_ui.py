@@ -8,6 +8,10 @@ packet=json.loads((ROOT/'scripts/domestic_research.json').read_text(encoding='ut
 assert packet['schema']=='domestic-research-v1'
 payload=json.dumps(packet,ensure_ascii=False,separators=(',',':')).replace('<','\\u003c').replace('&','\\u0026')
 domestic='const DOMESTIC_RESEARCH='+payload+';\n'+(ROOT/'scripts/domestic_research_ui.js').read_text(encoding='utf-8')
+live_path=ROOT/'dist/fundamentals.json'
+live=json.loads(live_path.read_text(encoding='utf-8')) if live_path.exists() else {'inventories':[],'supplies':[],'statuses':[],'asOf':'未取得','checkedAt':'未采集'}
+live_payload=json.dumps(live,ensure_ascii=False,separators=(',',':'),allow_nan=False).replace('<','\\u003c').replace('&','\\u0026')
+domestic+='\nconst LIVE_FUNDAMENTALS='+live_payload+';\n'+(ROOT/'scripts/live_fundamentals_ui.js').read_text(encoding='utf-8')
 ui=ui.replace('// END TERMINAL UI',domestic+'\n// END TERMINAL UI')
 if '// BEGIN TERMINAL UI' in s:
  a=s.index('// BEGIN TERMINAL UI');b=s.index('// END TERMINAL UI',a)+len('// END TERMINAL UI');s=s[:a]+ui+s[b:]
