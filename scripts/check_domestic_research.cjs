@@ -22,7 +22,32 @@ for(const [code,p] of Object.entries(packet.profiles)){
  for(const id of [...p.supplyFacts,...p.demandFacts,...p.inventoryFacts])assert(packet.facts[id],code+' '+id);
  for(const id of [...p.links,p.exchangeSource])assert(packet.sources[id],code+' '+id);
 }
+// Prevent sector templates from silently replacing commodity-specific macro research.
+const mechanisms=new Set(),titles=new Set();
+for(const [code,p] of Object.entries(packet.profiles)){
+ const r=p.macroResearch;assert(r,code+' macro configuration');
+ assert(r.title&&r.counter&&r.paths.length>=2&&r.watch.length>=3,code);
+ assert(!titles.has(r.title),code+' duplicate macro title');titles.add(r.title);
+ const chain=r.paths.map(p=>p.chain).join(';');assert(!mechanisms.has(chain),code+' duplicate macro mechanism');mechanisms.add(chain);
+ for(const p of r.paths)assert(p.label&&p.chain.includes('→'),code);
+ for(const id of r.facts)assert(packet.facts[id],code+' macro evidence '+id);
+}
+assert(!packet.profiles.au.macroResearch.facts.includes('pmi'));
+assert(packet.profiles.m.macroResearch.facts.includes('pigs'));
+assert(packet.profiles.rb.macroResearch.facts.includes('property'));
+assert.notDeepEqual(packet.profiles.al.macroResearch,packet.profiles.ao.macroResearch);
 const source=fs.readFileSync(path.join(__dirname,'domestic_research_ui.js'),'utf8');
+const macroContext=vm.createContext({DOMESTIC_RESEARCH:packet,DATA:snapshot,
+ esc:s=>String(s),domesticPeriodNotice:()=>'',domesticFactCards:ids=>ids.join(','),domesticSourceFoot:()=>'',legacyDimensionArticle:()=>''});
+vm.runInContext('function domesticProfile(m){return DOMESTIC_RESEARCH.profiles[m.code]}'+source.slice(source.indexOf('function domesticMacroIds('),source.indexOf('function domesticInventoryArticle(')),macroContext);
+for(const code of expected){
+ macroContext.market=snapshot.markets.find(m=>m.code===code);
+ const html=vm.runInContext('domesticMacroArticle(market)',macroContext),r=packet.profiles[code].macroResearch;
+ assert(html.includes(r.title)&&html.includes(r.counter),code+' rendered macro');
+ for(const p of r.paths)assert(html.includes(p.chain),code+' missing transmission');
+ for(const [other,p] of Object.entries(packet.profiles))if(other!==code)assert(!html.includes(p.macroResearch.title),code+' stale commodity content');
+ assert(html.includes('跟踪变量 · 非实时读数')&&html.includes('统计期和发布日'),code+' evidence boundaries');
+}
 const functions=source.slice(source.indexOf('function domesticDelivery('),source.indexOf('function domesticCurveSvg('));
 const ctx=vm.createContext({});vm.runInContext(functions,ctx);
 const rows=(m,date='2026-10-30')=>{ctx.market=m;ctx.date=date;return vm.runInContext('domesticCurveRows(market,date)',ctx)};
