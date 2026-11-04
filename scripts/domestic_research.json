@@ -1,0 +1,1215 @@
+{
+  "schema": "domestic-research-v1",
+  "reviewedAt": "2026-11-04",
+  "sources": {
+    "casde": {
+      "name": "农业农村部 · 2026年10月CASDE",
+      "url": "https://scs.moa.gov.cn/jcyj/202610/t20261009_6488446.htm",
+      "published": "2026-10-09",
+      "type": "官方预测"
+    },
+    "economy": {
+      "name": "国家统计局 · 前三季度经济运行",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965618.html",
+      "published": "2026-10-19",
+      "type": "官方统计"
+    },
+    "industry": {
+      "name": "国家统计局 · 9月工业生产",
+      "url": "https://www.stats.gov.cn/zwfwck/sjfb/202610/t20261019_1965617.html",
+      "published": "2026-10-19",
+      "type": "官方统计"
+    },
+    "property": {
+      "name": "国家统计局 · 1—9月房地产",
+      "url": "https://www.stats.gov.cn/sj/zxfbhjd/202610/t20261019_1965615.html",
+      "published": "2026-10-19",
+      "type": "官方统计"
+    },
+    "energy": {
+      "name": "国家统计局 · 9月能源生产",
+      "url": "https://www.stats.gov.cn/sj/zxfbhjd/202610/t20261019_1965613.html",
+      "published": "2026-10-19",
+      "type": "官方统计"
+    },
+    "oils": {
+      "name": "北京市粮食和物资储备局 · 三季度油脂油料报告",
+      "url": "https://lsj.beijing.gov.cn/zwxx/lyxx/hqfx/202610/t20261026_4918450.html",
+      "published": "2026-10-26",
+      "type": "部门研究观点"
+    },
+    "gold": {
+      "name": "中国黄金协会 · 前三季度黄金统计",
+      "url": "https://cngold.org.cn/news/show-9624.html",
+      "published": "2026-11-04",
+      "type": "协会统计"
+    },
+    "metals": {
+      "name": "中国有色金属报 · 9月产业景气报告",
+      "url": "https://www.cnmn.com.cn/ShowNews1.aspx?id=474620",
+      "published": null,
+      "type": "行业报告"
+    },
+    "shfe": {
+      "name": "上期所 · 日周数据",
+      "url": "https://www.shfe.com.cn/reports/tradedata/dailyandweeklydata/",
+      "published": null,
+      "type": "数据入口"
+    },
+    "dce": {
+      "name": "大商所 · 官网数据入口",
+      "url": "https://www.dce.com.cn/",
+      "published": null,
+      "type": "数据入口"
+    },
+    "czce": {
+      "name": "郑商所 · 官网数据入口",
+      "url": "https://www.czce.com.cn/",
+      "published": null,
+      "type": "数据入口"
+    },
+    "gfex": {
+      "name": "广期所 · 官网数据入口",
+      "url": "http://www.gfex.com.cn/",
+      "published": null,
+      "type": "数据入口"
+    },
+    "customs": {
+      "name": "海关统计查询 · 进出口",
+      "url": "https://stats.customs.gov.cn/",
+      "published": null,
+      "type": "待接入入口"
+    },
+    "smm": {
+      "name": "SMM · 产业数据库（权限待确认）",
+      "url": "https://data.smm.cn/",
+      "published": null,
+      "type": "待接入入口"
+    },
+    "cisa": {
+      "name": "中国钢铁工业协会（后续核对入口）",
+      "url": "https://www.chinaisa.org.cn/",
+      "published": null,
+      "type": "待接入入口"
+    },
+    "feed": {
+      "name": "中国饲料工业协会 · 行业分析（待接入）",
+      "url": "https://www.chinafeed.org.cn/hyfx/hyfx_erji/",
+      "published": null,
+      "type": "待接入入口"
+    },
+    "usda": {
+      "name": "USDA · PSD（海外补充入口）",
+      "url": "https://apps.fas.usda.gov/psdonline/app/index.html",
+      "published": null,
+      "type": "海外入口"
+    },
+    "mpob": {
+      "name": "MPOB · 马来西亚棕榈油（海外补充）",
+      "url": "https://bepi.mpob.gov.my/",
+      "published": null,
+      "type": "海外入口"
+    }
+  },
+  "facts": {
+    "soy_output": {
+      "source": "casde",
+      "label": "中国大豆产量预测",
+      "value": "2,036 万吨",
+      "period": "2026/27市场年度 · 2026年10月预测",
+      "note": "较9月预测调减59万吨；属于年度预测，并非已实现产量。",
+      "kind": "官方预测"
+    },
+    "soy_import": {
+      "source": "casde",
+      "label": "中国大豆进口预测",
+      "value": "9,550 万吨",
+      "period": "2026/27市场年度 · 2026年10月预测",
+      "note": "较9月预测不变；不是单月进口或到港实绩。",
+      "kind": "官方预测"
+    },
+    "soy_crush": {
+      "source": "casde",
+      "label": "中国大豆压榨消费预测",
+      "value": "9,400 万吨",
+      "period": "2026/27市场年度 · 2026年10月预测",
+      "note": "较9月预测不变，不能替代油厂周度压榨量。",
+      "kind": "官方预测"
+    },
+    "soy_food": {
+      "source": "casde",
+      "label": "中国大豆食用消费预测",
+      "value": "1,600 万吨",
+      "period": "2026/27市场年度 · 2026年10月预测",
+      "note": "国产非转基因大豆需求参考；不等于豆一期货交割需求。",
+      "kind": "官方预测"
+    },
+    "soy_oil": {
+      "source": "casde",
+      "label": "中国豆油产量预测",
+      "value": "1,717 万吨",
+      "period": "2026/27市场年度 · 2026年10月预测",
+      "note": "年度预测；较9月预测不变。",
+      "kind": "官方预测"
+    },
+    "rape_oil": {
+      "source": "casde",
+      "label": "中国菜籽油产量预测",
+      "value": "777 万吨",
+      "period": "2026/27市场年度 · 2026年10月预测",
+      "note": "菜油产量不能直接当作油菜籽或菜粕产量。",
+      "kind": "官方预测"
+    },
+    "peanut_oil": {
+      "source": "casde",
+      "label": "中国花生油产量预测",
+      "value": "417 万吨",
+      "period": "2026/27市场年度 · 2026年10月预测",
+      "note": "花生压榨需求的关联指标，不是花生产量。",
+      "kind": "官方预测"
+    },
+    "palm_import": {
+      "source": "casde",
+      "label": "中国棕榈油进口预测",
+      "value": "350 万吨",
+      "period": "2026/27市场年度 · 2026年10月预测",
+      "note": "不含棕榈硬脂；不是当月进口或港口库存。",
+      "kind": "官方预测"
+    },
+    "oils_demand": {
+      "source": "casde",
+      "label": "中国食用植物油国内消费预测",
+      "value": "3,789 万吨",
+      "period": "2026/27市场年度 · 2026年10月预测",
+      "note": "植物油合计，不能归为某一油种消费。",
+      "kind": "官方预测"
+    },
+    "peanut_trade": {
+      "source": "casde",
+      "label": "国内花生购销观察",
+      "value": "新季上市，油厂采购回落",
+      "period": "2026年10月报告",
+      "note": "报告称农户出售偏慢、双节后油厂采购下降；为报告期观察。",
+      "kind": "官方报告观察"
+    },
+    "oils_stock": {
+      "source": "oils",
+      "label": "国内油厂商业库存观察",
+      "value": "报告称处近五年同期高位",
+      "period": "2026年10月26日报告",
+      "note": "报告未在正文给出可核对库存数量、前值与样本清单，不生成去库幅度或图表。",
+      "kind": "部门研究观点"
+    },
+    "oils_supply": {
+      "source": "oils",
+      "label": "国内油厂供应链观察",
+      "value": "到港与压榨决定供应节奏",
+      "period": "2026年第三季度及四季度展望",
+      "note": "报告描述前三季度到港充足、压榨维持高位；四季度到港回落为展望。",
+      "kind": "部门研究观点"
+    },
+    "meal_demand": {
+      "source": "oils",
+      "label": "豆粕下游采购观察",
+      "value": "饲料企业随用随采",
+      "period": "2026年10月26日报告",
+      "note": "报告将养殖利润偏弱、补库意愿不足作为需求制约；非周度提货量统计。",
+      "kind": "部门研究观点"
+    },
+    "pmi": {
+      "source": "economy",
+      "label": "制造业PMI",
+      "value": "50.1%",
+      "period": "2026年9月",
+      "note": "较上月提高0.3个百分点；宏观景气指标，不是品种订单量。",
+      "kind": "官方统计"
+    },
+    "catering": {
+      "source": "economy",
+      "label": "餐饮收入同比",
+      "value": "+2.4%",
+      "period": "2026年1—9月",
+      "note": "餐饮消费背景，不能等比例换算为食用油销量。",
+      "kind": "官方统计"
+    },
+    "pigs": {
+      "source": "economy",
+      "label": "三季度末生猪存栏",
+      "value": "42,533 万头 / 同比 −2.6%",
+      "period": "2026年三季度末",
+      "note": "养殖规模代理，不等于饲料或豆粕消费。",
+      "kind": "官方统计"
+    },
+    "battery": {
+      "source": "economy",
+      "label": "锂离子电池产量同比",
+      "value": "+39.5%",
+      "period": "2026年1—9月",
+      "note": "终端产量代理，不能换算为碳酸锂实际消耗。",
+      "kind": "官方统计"
+    },
+    "property": {
+      "source": "property",
+      "label": "房屋新开工面积同比",
+      "value": "−24.9%",
+      "period": "2026年1—9月",
+      "note": "建筑需求代理；非螺纹钢表观消费。",
+      "kind": "官方统计"
+    },
+    "property_complete": {
+      "source": "property",
+      "label": "房屋竣工面积同比",
+      "value": "−25.1%",
+      "period": "2026年1—9月",
+      "note": "地产后周期参考，不等于铝材、铜材订单。",
+      "kind": "官方统计"
+    },
+    "steel": {
+      "source": "industry",
+      "label": "粗钢产量",
+      "value": "7,359 万吨 / 同比 +0.1%",
+      "period": "2026年9月",
+      "note": "全国粗钢总量；不等于螺纹、热卷或不锈钢单品产量。",
+      "kind": "官方统计"
+    },
+    "iron": {
+      "source": "industry",
+      "label": "生铁产量",
+      "value": "6,534 万吨 / 同比 −1.4%",
+      "period": "2026年9月",
+      "note": "铁矿、焦炭下游生产代理；不能替代高炉铁水周报。",
+      "kind": "官方统计"
+    },
+    "steel_products": {
+      "source": "industry",
+      "label": "钢材产量",
+      "value": "11,817 万吨 / 同比 −3.8%",
+      "period": "2026年9月",
+      "note": "钢材合计，不与粗钢相减计算库存或表观消费。",
+      "kind": "官方统计"
+    },
+    "aluminum": {
+      "source": "industry",
+      "label": "原铝（电解铝）产量",
+      "value": "391 万吨 / 同比 +3.1%",
+      "period": "2026年9月",
+      "note": "规模以上工业口径。",
+      "kind": "官方统计"
+    },
+    "nev": {
+      "source": "industry",
+      "label": "新能源汽车产量",
+      "value": "187.0 万辆 / 同比 +16.9%",
+      "period": "2026年9月",
+      "note": "汽车产业需求代理，不等于单一金属消费。",
+      "kind": "官方统计"
+    },
+    "solar": {
+      "source": "industry",
+      "label": "太阳能电池产量同比",
+      "value": "−5.1%",
+      "period": "2026年9月",
+      "note": "光伏终端生产代理，不等于多晶硅、工业硅或白银需求。",
+      "kind": "官方统计"
+    },
+    "coal": {
+      "source": "energy",
+      "label": "原煤产量",
+      "value": "3.9 亿吨 / 同比 −6.8%",
+      "period": "2026年9月",
+      "note": "所有原煤合计，不能替代炼焦煤供应。",
+      "kind": "官方统计"
+    },
+    "gold_supply": {
+      "source": "gold",
+      "label": "国内原料产金",
+      "value": "220.935 吨 / 同比 −18.71%",
+      "period": "2026年1—9月",
+      "note": "与进口原料产金分开统计。",
+      "kind": "协会统计"
+    },
+    "gold_total": {
+      "source": "gold",
+      "label": "国内及进口原料合计产金",
+      "value": "347.990 吨 / 同比 −11.44%",
+      "period": "2026年1—9月",
+      "note": "包括进口原料产金，不等于境内金矿产量。",
+      "kind": "协会统计"
+    },
+    "gold_demand": {
+      "source": "gold",
+      "label": "全国黄金消费量",
+      "value": "684.623 吨 / 同比 +0.28%",
+      "period": "2026年1—9月",
+      "note": "协会消费口径，不与国内产金直接相减判定缺口。",
+      "kind": "协会统计"
+    },
+    "copper": {
+      "source": "metals",
+      "label": "精炼铜产量",
+      "value": "127.9 万吨 / 同比 −1.2%",
+      "period": "2026年8月",
+      "note": "9月产业景气报告引用8月统计；不是9月产量。",
+      "kind": "行业报告"
+    },
+    "copper_import": {
+      "source": "metals",
+      "label": "铜矿砂及精矿累计进口",
+      "value": "1,949.2 万吨 / 同比 −2.8%",
+      "period": "2026年1—8月",
+      "note": "实物进口量，不能作为铜金属量。",
+      "kind": "行业报告"
+    },
+    "lead_mine": {
+      "source": "metals",
+      "label": "铅矿山金属量同比",
+      "value": "−22.3%",
+      "period": "2026年8月",
+      "note": "矿山端同比变化，不等于精炼铅或再生铅产量。",
+      "kind": "行业报告"
+    },
+    "zinc_mine": {
+      "source": "metals",
+      "label": "锌矿山金属量同比",
+      "value": "−18.7%",
+      "period": "2026年8月",
+      "note": "矿山端指标，不等于锌锭供应。",
+      "kind": "行业报告"
+    },
+    "tin_mine": {
+      "source": "metals",
+      "label": "锡矿山金属量同比",
+      "value": "−6.4%",
+      "period": "2026年8月",
+      "note": "矿山端指标，需结合进口及冶炼产量。",
+      "kind": "行业报告"
+    },
+    "nickel_mine": {
+      "source": "metals",
+      "label": "镍矿山金属量同比",
+      "value": "+3.0%",
+      "period": "2026年8月",
+      "note": "国内矿山端，不覆盖镍铁、精炼镍及进口。",
+      "kind": "行业报告"
+    }
+  },
+  "profiles": {
+    "a": {
+      "summary": "国产大豆产量预测下修，重点验证食用需求与新粮销售。",
+      "supply": "CASDE下调年度国产大豆产量预测。",
+      "demand": "食用消费年度预测维持不变，需核对销区采购。",
+      "inference": "年度产量下修与新粮集中上市可能并存，不能直接判断短期紧缺。",
+      "supplyFacts": [
+        "soy_output"
+      ],
+      "demandFacts": [
+        "soy_food"
+      ],
+      "missing": "新粮收购进度、国产豆库存、食品加工订单和现货成交。",
+      "overseas": "海外仅补充产地天气、出口节奏和进口成本；不替代国内到港、压榨和提货。",
+      "inventory": "产区贸易库存、收购进度和交割仓单分别跟踪。",
+      "links": [
+        "casde",
+        "customs",
+        "usda"
+      ],
+      "level": "部分品种资料",
+      "exchangeSource": "dce",
+      "inventoryFacts": [],
+      "macro": "国内食用消费和收储政策是核心；进口大豆主要作为替代与成本背景。"
+    },
+    "b": {
+      "summary": "先看国内进口压榨链，再看饲料采购与配方替代。",
+      "supply": "年度大豆进口与压榨预测提供原料规模参考。",
+      "demand": "养殖规模及饲料采购报告提供关联线索，尚无当周提货。",
+      "inference": "原料可获得性与粕类实际消耗须分别验证；饲料企业谨慎采购不等于消费量必然下降。",
+      "supplyFacts": [
+        "soy_import",
+        "soy_crush"
+      ],
+      "demandFacts": [
+        "pigs",
+        "meal_demand"
+      ],
+      "missing": "周度进口到港、实际压榨、油厂开机、豆粕成交提货和配方占比。",
+      "overseas": "海外仅补充产地天气、出口节奏和进口成本；不替代国内到港、压榨和提货。",
+      "inventory": "进口大豆、油厂豆粕及饲料厂库存分环节列示。",
+      "links": [
+        "casde",
+        "customs",
+        "feed",
+        "usda"
+      ],
+      "level": "部分品种资料",
+      "exchangeSource": "dce",
+      "inventoryFacts": [],
+      "macro": "养殖规模与利润影响饲料采购，但不同饲料配方会改变豆粕添加比例。"
+    },
+    "m": {
+      "summary": "先看国内进口压榨链，再看饲料采购与配方替代。",
+      "supply": "年度大豆进口与压榨预测提供原料规模参考。",
+      "demand": "养殖规模及饲料采购报告提供关联线索，尚无当周提货。",
+      "inference": "原料可获得性与粕类实际消耗须分别验证；饲料企业谨慎采购不等于消费量必然下降。",
+      "supplyFacts": [
+        "soy_import",
+        "soy_crush"
+      ],
+      "demandFacts": [
+        "pigs",
+        "meal_demand"
+      ],
+      "missing": "周度进口到港、实际压榨、油厂开机、豆粕成交提货和配方占比。",
+      "overseas": "海外仅补充产地天气、出口节奏和进口成本；不替代国内到港、压榨和提货。",
+      "inventory": "进口大豆、油厂豆粕及饲料厂库存分环节列示。",
+      "links": [
+        "casde",
+        "customs",
+        "feed",
+        "usda"
+      ],
+      "level": "部分品种资料",
+      "exchangeSource": "dce",
+      "inventoryFacts": [],
+      "macro": "养殖规模与利润影响饲料采购，但不同饲料配方会改变豆粕添加比例。"
+    },
+    "y": {
+      "summary": "国内压榨供应与终端采购节奏是豆油供需主线。",
+      "supply": "年度豆油产量预测与国内油厂供应报告并列。",
+      "demand": "植物油年度需求为合计指标，餐饮收入提供终端背景。",
+      "inference": "报告提示商业库存偏高与旺季采购可能并存，需用后续库存数量验证去化。",
+      "supplyFacts": [
+        "soy_oil",
+        "oils_supply"
+      ],
+      "demandFacts": [
+        "oils_demand",
+        "catering"
+      ],
+      "missing": "周度压榨、豆油产出、成交提货与实际商业库存。",
+      "overseas": "海外仅补充产地天气、出口节奏和进口成本；不替代国内到港、压榨和提货。",
+      "inventory": "油厂豆油商业库存与交易所仓单不能混用。",
+      "links": [
+        "casde",
+        "customs",
+        "usda"
+      ],
+      "level": "部分品种资料",
+      "exchangeSource": "dce",
+      "inventoryFacts": [
+        "oils_stock"
+      ],
+      "macro": "餐饮、食品加工和居民消费共同影响豆油需求，关注终端采购向油厂提货的转化。"
+    },
+    "p": {
+      "summary": "棕榈油在国内先看进口到港和替代消费。",
+      "supply": "CASDE提供中国年度进口预测；不作为当月到港实绩。",
+      "demand": "植物油消费合计仅作背景，国内棕榈油单品消费待补。",
+      "inference": "年度进口规模不代表港口可用现货；仍需与豆棕价差及分提需求核对。",
+      "supplyFacts": [
+        "palm_import"
+      ],
+      "demandFacts": [
+        "oils_demand"
+      ],
+      "missing": "当月进口、船期到港、港口库存、分提开工和食用/工业采购。",
+      "overseas": "MPOB用于补马来西亚产量、出口和库存，国内进口节奏单列。",
+      "inventory": "港口棕榈油库存需区分地区、熔点及统计样本。",
+      "links": [
+        "casde",
+        "customs",
+        "mpob"
+      ],
+      "level": "部分品种资料",
+      "exchangeSource": "dce",
+      "inventoryFacts": [],
+      "macro": "国内油脂替代关系与食品工业采购优先；生物柴油政策通过海外供应和进口成本传导。"
+    },
+    "oi": {
+      "summary": "菜籽、菜油和菜粕分环节研究，不用菜油产量替代其他单品。",
+      "supply": "已取得菜籽油年度预测；菜籽进口、压榨和菜粕产出尚缺。",
+      "demand": "植物油合计与生猪规模仅为产业链背景，非本品种直接需求。",
+      "inference": "油粕联产可能使油与粕需求分化，需分别核对成交和库存。",
+      "supplyFacts": [
+        "rape_oil"
+      ],
+      "demandFacts": [
+        "oils_demand",
+        "pigs"
+      ],
+      "missing": "菜籽到港、油厂压榨、菜粕提货、水产投苗与菜油消费。",
+      "overseas": "海外仅补充产地天气、出口节奏和进口成本；不替代国内到港、压榨和提货。",
+      "inventory": "菜籽、菜油、菜粕库存分开，不能折算后直接相加。",
+      "links": [
+        "casde",
+        "customs",
+        "feed"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "czce",
+      "inventoryFacts": [],
+      "macro": "食用油需求与养殖饲料需求分开观察，进口政策通过原料到港传导。"
+    },
+    "rs": {
+      "summary": "菜籽、菜油和菜粕分环节研究，不用菜油产量替代其他单品。",
+      "supply": "已取得菜籽油年度预测；菜籽进口、压榨和菜粕产出尚缺。",
+      "demand": "植物油合计与生猪规模仅为产业链背景，非本品种直接需求。",
+      "inference": "油粕联产可能使油与粕需求分化，需分别核对成交和库存。",
+      "supplyFacts": [
+        "rape_oil"
+      ],
+      "demandFacts": [
+        "oils_demand",
+        "pigs"
+      ],
+      "missing": "菜籽到港、油厂压榨、菜粕提货、水产投苗与菜油消费。",
+      "overseas": "海外仅补充产地天气、出口节奏和进口成本；不替代国内到港、压榨和提货。",
+      "inventory": "菜籽、菜油、菜粕库存分开，不能折算后直接相加。",
+      "links": [
+        "casde",
+        "customs",
+        "feed"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "czce",
+      "inventoryFacts": [],
+      "macro": "食用油需求与养殖饲料需求分开观察，进口政策通过原料到港传导。"
+    },
+    "rm": {
+      "summary": "菜籽、菜油和菜粕分环节研究，不用菜油产量替代其他单品。",
+      "supply": "已取得菜籽油年度预测；菜籽进口、压榨和菜粕产出尚缺。",
+      "demand": "植物油合计与生猪规模仅为产业链背景，非本品种直接需求。",
+      "inference": "油粕联产可能使油与粕需求分化，需分别核对成交和库存。",
+      "supplyFacts": [
+        "rape_oil"
+      ],
+      "demandFacts": [
+        "oils_demand",
+        "pigs"
+      ],
+      "missing": "菜籽到港、油厂压榨、菜粕提货、水产投苗与菜油消费。",
+      "overseas": "海外仅补充产地天气、出口节奏和进口成本；不替代国内到港、压榨和提货。",
+      "inventory": "菜籽、菜油、菜粕库存分开，不能折算后直接相加。",
+      "links": [
+        "casde",
+        "customs",
+        "feed"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "czce",
+      "inventoryFacts": [],
+      "macro": "食用油需求与养殖饲料需求分开观察，进口政策通过原料到港传导。"
+    },
+    "pk": {
+      "summary": "国内新季花生上市与油厂采购是当前观察重点。",
+      "supply": "报告描述新季花生已上市、农户出售较慢。",
+      "demand": "报告记录节后油厂采购回落；花生油产量预测为压榨需求关联项。",
+      "inference": "上市增加与采购放缓是否形成库存压力，仍需收购、出油率和库存数量验证。",
+      "supplyFacts": [
+        "peanut_trade"
+      ],
+      "demandFacts": [
+        "peanut_oil"
+      ],
+      "missing": "主产区产量、农户售粮进度、油厂收购量、食用花生订单及库存。",
+      "overseas": "海外仅补充产地天气、出口节奏和进口成本；不替代国内到港、压榨和提货。",
+      "inventory": "农户余货、贸易商库存和油厂原料分别统计。",
+      "links": [
+        "casde",
+        "customs"
+      ],
+      "level": "部分品种资料",
+      "exchangeSource": "czce",
+      "inventoryFacts": [],
+      "macro": "国内收获天气、油厂采购与食品消费为主；海外进口补充单列。"
+    },
+    "cu": {
+      "summary": "国内精炼铜供应已有月度线索，下游实际采购仍需补证。",
+      "supply": "8月精炼铜产量及1—8月铜精矿进口分口径展示。",
+      "demand": "新能源汽车、竣工等终端为需求代理，尚不能代表铜材订单。",
+      "inference": "矿端进口、冶炼产出与加工消费并不一一同步；不能凭单项同比推断国内短缺。",
+      "supplyFacts": [
+        "copper",
+        "copper_import"
+      ],
+      "demandFacts": [
+        "nev",
+        "property_complete"
+      ],
+      "missing": "9月及以后精铜产量、铜杆铜管开工、电网订单、废铜替代及社会库存。",
+      "overseas": "LME矿端和海外库存放在补充位置，不能替代沪铜国内供需。",
+      "inventory": "上期所库存、社会库存、保税库及冶炼厂库存分别列示。",
+      "links": [
+        "smm",
+        "customs",
+        "shfe"
+      ],
+      "level": "部分品种资料",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "bc": {
+      "summary": "国内精炼铜供应已有月度线索，下游实际采购仍需补证。",
+      "supply": "8月精炼铜产量及1—8月铜精矿进口分口径展示。",
+      "demand": "新能源汽车、竣工等终端为需求代理，尚不能代表铜材订单。",
+      "inference": "矿端进口、冶炼产出与加工消费并不一一同步；不能凭单项同比推断国内短缺。",
+      "supplyFacts": [
+        "copper",
+        "copper_import"
+      ],
+      "demandFacts": [
+        "nev",
+        "property_complete"
+      ],
+      "missing": "9月及以后精铜产量、铜杆铜管开工、电网订单、废铜替代及社会库存。",
+      "overseas": "LME矿端和海外库存放在补充位置，不能替代沪铜国内供需。",
+      "inventory": "上期所库存、社会库存、保税库及冶炼厂库存分别列示。",
+      "links": [
+        "smm",
+        "customs",
+        "shfe"
+      ],
+      "level": "部分品种资料",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "al": {
+      "summary": "国内原铝产量已有统计，下游加工及出口需进一步核对。",
+      "supply": "9月电解铝产量同比增加。",
+      "demand": "新能源汽车和地产竣工为下游代理，尚缺铝材开工。",
+      "inference": "上游增产与下游需求分化须通过铝锭去库、铝棒加工和出口验证。",
+      "supplyFacts": [
+        "aluminum"
+      ],
+      "demandFacts": [
+        "nev",
+        "property_complete"
+      ],
+      "missing": "铝材开工、铝棒库存、铝水比例、出口与电解铝检修。",
+      "overseas": "海外能源成本与进口盈亏作为补充。",
+      "inventory": "铝锭社会库存、铝棒库存、仓单和在途分别统计。",
+      "links": [
+        "smm",
+        "customs",
+        "shfe"
+      ],
+      "level": "部分品种资料",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "ao": {
+      "summary": "氧化铝需求参考电解铝生产，但供给端数量仍缺。",
+      "supply": "氧化铝自身产量、检修及进口尚未核对。",
+      "demand": "电解铝产量是下游生产代理，非氧化铝实际采购量。",
+      "inference": "下游产出增加是否拉动氧化铝采购，需结合消耗系数、厂内库存及投复产。",
+      "supplyFacts": [],
+      "demandFacts": [
+        "aluminum"
+      ],
+      "missing": "氧化铝实际产量、铝土矿到港、开工、现货成交及冶炼厂库存。",
+      "overseas": "海外铝土矿供应和运费补充国内原料条件。",
+      "inventory": "氧化铝厂库、电解铝厂原料库存及仓单分开。",
+      "links": [
+        "smm",
+        "customs",
+        "shfe"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "ad": {
+      "summary": "铸造铝合金关注再生原料、合金产出与汽车铸造需求。",
+      "supply": "废铝供应、再生铝开工和铸造铝合金产量未取得。",
+      "demand": "新能源汽车产量仅为关联线索，不替代铸件订单。",
+      "inference": "汽车产出与用铝结构均可能变化，不能直接等比例外推合金需求。",
+      "supplyFacts": [],
+      "demandFacts": [
+        "nev"
+      ],
+      "missing": "废铝回收、再生铝开工、铸造订单和成品库存。",
+      "overseas": "废铝进口、海外合金和进口成本补充。",
+      "inventory": "废铝原料、合金成品及仓单库存分开。",
+      "links": [
+        "smm",
+        "customs",
+        "shfe"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "zn": {
+      "summary": "锌矿供应与镀锌加工分环节观察，现有矿端与终端资料不能构成完整平衡表。",
+      "supply": "国内矿山端已有8月同比资料，冶炼、再生和进口补充尚缺。",
+      "demand": "使用相关终端生产作代理，必须与本品种加工开工共同核对。",
+      "inference": "矿端与终端变化可能不同步，尚不能判断本品种需求强弱及供需缺口。",
+      "supplyFacts": [
+        "zinc_mine"
+      ],
+      "demandFacts": [
+        "property",
+        "nev"
+      ],
+      "missing": "精炼锌产量、镀锌开工、压铸订单和进口锌锭。",
+      "overseas": "海外矿端、冶炼和贸易流补充国内供应。",
+      "inventory": "交易所仓单、社会库存、冶炼厂及下游原料库存分环节。",
+      "links": [
+        "smm",
+        "customs",
+        "shfe"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "pb": {
+      "summary": "原生铅、再生铅与蓄电池分环节观察，现有矿端与终端资料不能构成完整平衡表。",
+      "supply": "国内矿山端已有8月同比资料，冶炼、再生和进口补充尚缺。",
+      "demand": "使用相关终端生产作代理，必须与本品种加工开工共同核对。",
+      "inference": "矿端与终端变化可能不同步，尚不能判断本品种需求强弱及供需缺口。",
+      "supplyFacts": [
+        "lead_mine"
+      ],
+      "demandFacts": [
+        "nev"
+      ],
+      "missing": "再生铅开工、废电瓶采购、铅酸电池订单；新能源汽车产量不等于铅酸需求。",
+      "overseas": "海外矿端、冶炼和贸易流补充国内供应。",
+      "inventory": "交易所仓单、社会库存、冶炼厂及下游原料库存分环节。",
+      "links": [
+        "smm",
+        "customs",
+        "shfe"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "sn": {
+      "summary": "锡矿、锡锭与焊料加工分环节观察，现有矿端与终端资料不能构成完整平衡表。",
+      "supply": "国内矿山端已有8月同比资料，冶炼、再生和进口补充尚缺。",
+      "demand": "使用相关终端生产作代理，必须与本品种加工开工共同核对。",
+      "inference": "矿端与终端变化可能不同步，尚不能判断本品种需求强弱及供需缺口。",
+      "supplyFacts": [
+        "tin_mine"
+      ],
+      "demandFacts": [
+        "solar"
+      ],
+      "missing": "锡锭产量、焊料开工、电子订单和矿石进口。",
+      "overseas": "海外矿端、冶炼和贸易流补充国内供应。",
+      "inventory": "交易所仓单、社会库存、冶炼厂及下游原料库存分环节。",
+      "links": [
+        "smm",
+        "customs",
+        "shfe"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "ni": {
+      "summary": "精炼镍、镍铁与不锈钢/电池链分环节观察，现有矿端与终端资料不能构成完整平衡表。",
+      "supply": "国内矿山端已有8月同比资料，冶炼、再生和进口补充尚缺。",
+      "demand": "使用相关终端生产作代理，必须与本品种加工开工共同核对。",
+      "inference": "矿端与终端变化可能不同步，尚不能判断本品种需求强弱及供需缺口。",
+      "supplyFacts": [
+        "nickel_mine"
+      ],
+      "demandFacts": [
+        "steel",
+        "nev"
+      ],
+      "missing": "镍铁和精炼镍产量、不锈钢排产、硫酸镍订单与进口；矿产不代表全部镍供给。",
+      "overseas": "海外矿端、冶炼和贸易流补充国内供应。",
+      "inventory": "交易所仓单、社会库存、冶炼厂及下游原料库存分环节。",
+      "links": [
+        "smm",
+        "customs",
+        "shfe"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "au": {
+      "summary": "国内黄金产量与消费均有协会统计，保留各自口径。",
+      "supply": "国内原料产金与含进口原料产金分开列示。",
+      "demand": "全国黄金消费量为协会消费口径，不能代表投资资金流。",
+      "inference": "生产与消费统计范围不同，直接相减不能作为黄金缺口。",
+      "supplyFacts": [
+        "gold_supply",
+        "gold_total"
+      ],
+      "demandFacts": [
+        "gold_demand"
+      ],
+      "missing": "首饰与金条金币消费结构、回收金、净进口和境内ETF持仓。",
+      "overseas": "海外实际利率、央行购金和ETF作为补充；本页尚未接入最新值。",
+      "inventory": "交易所可交割库存与ETF持仓各按原口径记录。",
+      "links": [
+        "gold",
+        "customs",
+        "shfe"
+      ],
+      "level": "部分品种资料",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内首饰与投资需求需分别观察；实际利率、汇率和避险影响估值，但当前未接入这些最新指标。"
+    },
+    "ag": {
+      "summary": "贵金属工业与投资需求分开，国内供需仍有关键缺口。",
+      "supply": "本品种矿产、回收及净进口尚未取得。",
+      "demand": "光伏与汽车生产仅为终端背景，不能直接折算贵金属消费。",
+      "inference": "终端增长与单位金属用量下降可能并存；投资需求需另行核对。",
+      "supplyFacts": [],
+      "demandFacts": [
+        "solar",
+        "nev"
+      ],
+      "missing": "本品种产量、回收、进出口、工业订单和投资持仓。",
+      "overseas": "海外汽车排放、矿产供应及贵金属投资需求补充。",
+      "inventory": "交易所库存、加工企业原料和投资持仓分开。",
+      "links": [
+        "smm",
+        "customs"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内工业需求与投资需求分别研究，不能用黄金消费统计代替其他贵金属消费。"
+    },
+    "pt": {
+      "summary": "贵金属工业与投资需求分开，国内供需仍有关键缺口。",
+      "supply": "本品种矿产、回收及净进口尚未取得。",
+      "demand": "光伏与汽车生产仅为终端背景，不能直接折算贵金属消费。",
+      "inference": "终端增长与单位金属用量下降可能并存；投资需求需另行核对。",
+      "supplyFacts": [],
+      "demandFacts": [
+        "solar",
+        "nev"
+      ],
+      "missing": "本品种产量、回收、进出口、工业订单和投资持仓。",
+      "overseas": "海外汽车排放、矿产供应及贵金属投资需求补充。",
+      "inventory": "交易所库存、加工企业原料和投资持仓分开。",
+      "links": [
+        "smm",
+        "customs"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "gfex",
+      "inventoryFacts": [],
+      "macro": "国内工业需求与投资需求分别研究，不能用黄金消费统计代替其他贵金属消费。"
+    },
+    "pd": {
+      "summary": "贵金属工业与投资需求分开，国内供需仍有关键缺口。",
+      "supply": "本品种矿产、回收及净进口尚未取得。",
+      "demand": "光伏与汽车生产仅为终端背景，不能直接折算贵金属消费。",
+      "inference": "终端增长与单位金属用量下降可能并存；投资需求需另行核对。",
+      "supplyFacts": [],
+      "demandFacts": [
+        "solar",
+        "nev"
+      ],
+      "missing": "本品种产量、回收、进出口、工业订单和投资持仓。",
+      "overseas": "海外汽车排放、矿产供应及贵金属投资需求补充。",
+      "inventory": "交易所库存、加工企业原料和投资持仓分开。",
+      "links": [
+        "smm",
+        "customs"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "gfex",
+      "inventoryFacts": [],
+      "macro": "国内工业需求与投资需求分别研究，不能用黄金消费统计代替其他贵金属消费。"
+    },
+    "si": {
+      "summary": "硅产业链以国内生产和光伏排产为主，当前只接入终端代理。",
+      "supply": "工业硅或多晶硅本品种产量、开工、检修尚未取得。",
+      "demand": "太阳能电池产量提供光伏终端线索，不等于上游原料采购。",
+      "inference": "不同环节的扩产、库存和单耗会放大或缓冲终端变化，需分环节验证。",
+      "supplyFacts": [],
+      "demandFacts": [
+        "solar"
+      ],
+      "missing": "本品种产量、开工、电价成本、硅片排产、订单和分环节库存。",
+      "overseas": "海外需求和贸易政策补充国内排产。",
+      "inventory": "工业硅厂库、多晶硅厂库、下游原料及仓单分别统计。",
+      "links": [
+        "smm",
+        "customs",
+        "gfex"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "gfex",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "ps": {
+      "summary": "硅产业链以国内生产和光伏排产为主，当前只接入终端代理。",
+      "supply": "工业硅或多晶硅本品种产量、开工、检修尚未取得。",
+      "demand": "太阳能电池产量提供光伏终端线索，不等于上游原料采购。",
+      "inference": "不同环节的扩产、库存和单耗会放大或缓冲终端变化，需分环节验证。",
+      "supplyFacts": [],
+      "demandFacts": [
+        "solar"
+      ],
+      "missing": "本品种产量、开工、电价成本、硅片排产、订单和分环节库存。",
+      "overseas": "海外需求和贸易政策补充国内排产。",
+      "inventory": "工业硅厂库、多晶硅厂库、下游原料及仓单分别统计。",
+      "links": [
+        "smm",
+        "customs",
+        "gfex"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "gfex",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "lc": {
+      "summary": "碳酸锂以国内锂盐供应、正极排产和电池链为主。",
+      "supply": "国内锂盐产量、矿端与回收供应尚未取得。",
+      "demand": "电池与新能源汽车生产是终端代理，不等于碳酸锂采购量。",
+      "inference": "终端扩张不保证锂盐同步去库，需核对正极材料结构、单耗和库存。",
+      "supplyFacts": [],
+      "demandFacts": [
+        "battery",
+        "nev"
+      ],
+      "missing": "锂盐开工、进口、正极排产、长协提货与工厂库存。",
+      "overseas": "海外矿石、盐湖和进口成本作为补充。",
+      "inventory": "锂盐厂、正极厂、贸易商和交易所库存区分统计。",
+      "links": [
+        "smm",
+        "customs",
+        "gfex"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "gfex",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "rb": {
+      "summary": "建筑用钢关注国内产出与新开工，但单品消费仍需验证。",
+      "supply": "全国粗钢、钢材产量提供上游总量背景。",
+      "demand": "新开工面积是建筑需求代理，尚无建筑钢材实际成交。",
+      "inference": "全国供给与建筑需求可能分化，需用单品排产、成交及去库确认。",
+      "supplyFacts": [
+        "steel",
+        "steel_products"
+      ],
+      "demandFacts": [
+        "property"
+      ],
+      "missing": "螺纹/线材周产量、钢厂开工、建筑成交、钢厂和社会库存。",
+      "overseas": "出口、进口矿成本和海外钢价为补充。",
+      "inventory": "分品种钢厂库存与社会库存，不把钢材合计当作单品库存。",
+      "links": [
+        "cisa",
+        "customs",
+        "shfe"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "wr": {
+      "summary": "建筑用钢关注国内产出与新开工，但单品消费仍需验证。",
+      "supply": "全国粗钢、钢材产量提供上游总量背景。",
+      "demand": "新开工面积是建筑需求代理，尚无建筑钢材实际成交。",
+      "inference": "全国供给与建筑需求可能分化，需用单品排产、成交及去库确认。",
+      "supplyFacts": [
+        "steel",
+        "steel_products"
+      ],
+      "demandFacts": [
+        "property"
+      ],
+      "missing": "螺纹/线材周产量、钢厂开工、建筑成交、钢厂和社会库存。",
+      "overseas": "出口、进口矿成本和海外钢价为补充。",
+      "inventory": "分品种钢厂库存与社会库存，不把钢材合计当作单品库存。",
+      "links": [
+        "cisa",
+        "customs",
+        "shfe"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "hc": {
+      "summary": "热卷需求以制造业和出口为主，国内钢铁总量仅作供应背景。",
+      "supply": "粗钢与钢材产量为行业总量，未取得热卷自身排产。",
+      "demand": "汽车生产提供制造业需求代理，不能当作热卷消费量。",
+      "inference": "制造业与建筑需求可能分化，热卷需用自身订单及库存验证。",
+      "supplyFacts": [
+        "steel",
+        "steel_products"
+      ],
+      "demandFacts": [
+        "nev"
+      ],
+      "missing": "热卷周产量、冷轧开工、家电/机械订单、出口和热卷库存。",
+      "overseas": "海外制造景气及钢材贸易为补充。",
+      "inventory": "热卷钢厂库存和社会库存分别记录。",
+      "links": [
+        "cisa",
+        "customs",
+        "shfe"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "ss": {
+      "summary": "不锈钢需单独研究，粗钢总量不代表不锈钢供给。",
+      "supply": "未取得不锈钢排产、冷轧开工及镍铬原料供应。",
+      "demand": "制造业PMI与地产竣工仅作终端线索。",
+      "inference": "需用不锈钢订单和分规格库存验证，不以普通钢材消费替代。",
+      "supplyFacts": [],
+      "demandFacts": [
+        "pmi",
+        "property_complete"
+      ],
+      "missing": "不锈钢排产、钢厂利润、冷轧接单和分地区社会库存。",
+      "overseas": "镍铁、铬矿进口与海外不锈钢贸易补充。",
+      "inventory": "冷热轧、不同钢种和地区社会库存分别统计。",
+      "links": [
+        "smm",
+        "customs",
+        "shfe"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "shfe",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "i": {
+      "summary": "黑色原料需求先看国内生铁生产，再核对高炉和焦化环节。",
+      "supply": "原煤仅为煤炭大行业背景，铁矿与炼焦煤单品供应尚未核对。",
+      "demand": "生铁产量是铁矿与焦炭下游生产代理；焦煤还需焦化开工。",
+      "inference": "不能用原煤减产直接推断炼焦煤短缺，也不能将生铁同比等同于原料消费。",
+      "supplyFacts": [],
+      "demandFacts": [
+        "iron"
+      ],
+      "missing": "进口矿到港、矿山发运；焦化产量、焦煤供应、钢厂原料采购与库存。",
+      "overseas": "进口矿、海运煤发运、运费和海外供给作为补充。",
+      "inventory": "铁矿港口、钢厂矿；焦企/钢厂焦炭；矿山/洗煤厂焦煤分别统计。",
+      "links": [
+        "cisa",
+        "customs",
+        "dce"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "dce",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "j": {
+      "summary": "黑色原料需求先看国内生铁生产，再核对高炉和焦化环节。",
+      "supply": "原煤仅为煤炭大行业背景，铁矿与炼焦煤单品供应尚未核对。",
+      "demand": "生铁产量是铁矿与焦炭下游生产代理；焦煤还需焦化开工。",
+      "inference": "不能用原煤减产直接推断炼焦煤短缺，也不能将生铁同比等同于原料消费。",
+      "supplyFacts": [],
+      "demandFacts": [
+        "iron"
+      ],
+      "missing": "进口矿到港、矿山发运；焦化产量、焦煤供应、钢厂原料采购与库存。",
+      "overseas": "进口矿、海运煤发运、运费和海外供给作为补充。",
+      "inventory": "铁矿港口、钢厂矿；焦企/钢厂焦炭；矿山/洗煤厂焦煤分别统计。",
+      "links": [
+        "cisa",
+        "customs",
+        "dce"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "dce",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "jm": {
+      "summary": "黑色原料需求先看国内生铁生产，再核对高炉和焦化环节。",
+      "supply": "9月原煤产量是宽口径参考，不能代表炼焦煤有效供应。",
+      "demand": "生铁产量是铁矿与焦炭下游生产代理；焦煤还需焦化开工。",
+      "inference": "不能用原煤减产直接推断炼焦煤短缺，也不能将生铁同比等同于原料消费。",
+      "supplyFacts": [
+        "coal"
+      ],
+      "demandFacts": [
+        "iron"
+      ],
+      "missing": "进口矿到港、矿山发运；焦化产量、焦煤供应、钢厂原料采购与库存。",
+      "overseas": "进口矿、海运煤发运、运费和海外供给作为补充。",
+      "inventory": "铁矿港口、钢厂矿；焦企/钢厂焦炭；矿山/洗煤厂焦煤分别统计。",
+      "links": [
+        "cisa",
+        "customs",
+        "dce"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "dce",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "sf": {
+      "summary": "铁合金需求关联粗钢生产，但合金单耗与钢种结构需验证。",
+      "supply": "本品种开工、产量、检修及矿石供应尚未取得。",
+      "demand": "粗钢产量提供钢厂需求背景，不能直接换算合金用量。",
+      "inference": "钢厂招标与钢种结构可能使合金需求偏离粗钢变化，需进一步验证。",
+      "supplyFacts": [],
+      "demandFacts": [
+        "steel"
+      ],
+      "missing": "铁合金产量、电费、锰矿/硅石成本、钢招量价和厂库。",
+      "overseas": "进口锰矿、海外钢铁与能源成本补充。",
+      "inventory": "工厂库存、钢厂原料库存和交割仓单区分。",
+      "links": [
+        "cisa",
+        "smm",
+        "customs",
+        "czce"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "czce",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    },
+    "sm": {
+      "summary": "铁合金需求关联粗钢生产，但合金单耗与钢种结构需验证。",
+      "supply": "本品种开工、产量、检修及矿石供应尚未取得。",
+      "demand": "粗钢产量提供钢厂需求背景，不能直接换算合金用量。",
+      "inference": "钢厂招标与钢种结构可能使合金需求偏离粗钢变化，需进一步验证。",
+      "supplyFacts": [],
+      "demandFacts": [
+        "steel"
+      ],
+      "missing": "铁合金产量、电费、锰矿/硅石成本、钢招量价和厂库。",
+      "overseas": "进口锰矿、海外钢铁与能源成本补充。",
+      "inventory": "工厂库存、钢厂原料库存和交割仓单区分。",
+      "links": [
+        "cisa",
+        "smm",
+        "customs",
+        "czce"
+      ],
+      "level": "行业线索",
+      "exchangeSource": "czce",
+      "inventoryFacts": [],
+      "macro": "国内制造、地产与终端生产提供需求背景；需与本品种加工开工、订单和库存共同验证，不直接解释当日价格。"
+    }
+  }
+}

@@ -1,11 +1,18 @@
 from pathlib import Path
 import re
+import json
 ROOT=Path(__file__).resolve().parents[1]
 p=ROOT/'dist/app.js';s=p.read_text(encoding='utf-8')
 ui=(ROOT/'scripts/terminal_ui.js').read_text(encoding='utf-8')
+packet=json.loads((ROOT/'scripts/domestic_research.json').read_text(encoding='utf-8'))
+assert packet['schema']=='domestic-research-v1'
+payload=json.dumps(packet,ensure_ascii=False,separators=(',',':')).replace('<','\\u003c').replace('&','\\u0026')
+domestic='const DOMESTIC_RESEARCH='+payload+';\n'+(ROOT/'scripts/domestic_research_ui.js').read_text(encoding='utf-8')
+ui=ui.replace('// END TERMINAL UI',domestic+'\n// END TERMINAL UI')
 if '// BEGIN TERMINAL UI' in s:
  a=s.index('// BEGIN TERMINAL UI');b=s.index('// END TERMINAL UI',a)+len('// END TERMINAL UI');s=s[:a]+ui+s[b:]
 else:s=s.replace('function render(){',ui+'\nfunction render(){')
+s=re.sub(r'// END TERMINAL UI\s*(?=function render\()', '// END TERMINAL UI\n', s)
 # Previous repeated upgrades had duplicated this label; retain one.
 label='''<span class="chart-unit">${m.aggregateScope==='representative-contract'?(m.mainMatchedContinuous?'已匹配主力合约':'盘后代表合约'):'持仓量最大合约'}</span>'''
 while label+label in s:s=s.replace(label+label,label)

@@ -57,6 +57,7 @@ jobs:
         run: |
           python scripts/check_analysis.py
           node scripts/check_scatter.cjs
+          node scripts/check_domestic_research.cjs
           python -m unittest discover -s tests -v
       - name: Fetch and validate all exchanges
         id: refresh
