@@ -19,9 +19,9 @@ assert data['schema'] == 'domestic-v1'
 payload = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c').replace('&', '\\u0026')
 html = html.replace('<link rel="stylesheet" href="style.css">', '<style>' + css + '</style>')
 html = re.sub(r'<a[^>]*class="offline-download"[^>]*>.*?</a>', '', html)
-html = html.replace('<script type="module" src="app.js"></script>', '<script id="embedded-data" type="application/json">' + payload + '</script><script>' + js.replace('</script', '<\\/script') + '</script>')
+html = re.sub(r'<script type="module" src="app\.js(?:\?[^"<>]*)?"></script>', lambda match: '<script id="embedded-data" type="application/json">' + payload + '</script><script>' + js.replace('</script', '<\\/script') + '</script>', html)
 assert 'fetch(' not in html and '@import' not in html
-assert 'src="app.js"' not in html and 'href="style.css"' not in html
+assert 'src="app.js' not in html and 'href="style.css"' not in html
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--output', type=pathlib.Path, default=ROOT.parent / '商品研究终端.html')
 out = parser.parse_args().output.resolve()

@@ -24,3 +24,12 @@ p.write_text(s,encoding='utf-8')
 css='\n'.join((ROOT/'scripts'/name).read_text(encoding='utf-8') for name in ['terminal.css','terminal_readability.css'])
 (ROOT/'dist/style.css').write_text(css,encoding='utf-8')
 print('Terminal interface installed.')
+
+# Give every published script a content-specific URL so a page refresh picks up UI fixes.
+import hashlib
+index=ROOT/'dist/index.html'
+version=hashlib.sha256(p.read_bytes()).hexdigest()[:12]
+html=index.read_text(encoding='utf-8')
+html,count=re.subn(r'src="app\.js(?:\?[^"<>]*)?"', 'src="app.js?v='+version+'"',html)
+assert count==1, 'Expected one application script tag.'
+index.write_text(html,encoding='utf-8')
