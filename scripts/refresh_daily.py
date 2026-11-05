@@ -83,6 +83,16 @@ def validate_snapshot(data, day, previous=None, history_start=None):
         if dates != sorted(set(dates)):
             raise ValueError(f"{m['code']}: duplicate/unsorted historical dates.")
         prior = previous_markets.get(m['code'])
+        prior_cont=prior.get('continuous') if prior else None
+        if prior_cont and prior_cont.get('history'):
+            current_cont=m.get('continuous') or {}
+            count=len(prior_cont['history'])
+            if current_cont.get('history',[])[:count]!=prior_cont['history']:
+                raise ValueError(f"{m['code']}: published continuous history lost or rebased.")
+            if current_cont.get('rollovers',[])[:len(prior_cont.get('rollovers',[]))]!=prior_cont.get('rollovers',[]):
+                raise ValueError(f"{m['code']}: published roll records changed.")
+            if any(current_cont.get(k)!=prior_cont.get(k) for k in ('baseDate','baseContract','basePrice','schema')):
+                raise ValueError(f"{m['code']}: continuous base changed.")
         if prior and previous['asOf'] == day and prior['main']['contract'].lower() == main['contract'].lower() and prior.get('ranks') and not m.get('ranks'):
             raise ValueError(f"{m['code']}: lost previously validated same-day rankings.")
         if prior and prior['main']['contract'].lower() == main['contract'].lower():
@@ -117,6 +127,9 @@ def run_script(stage, name, *args):
 
 
 def build_candidate(stage, day, start, run=run_script):
+    # Keep the already-published base/roll history before source scripts replace data.json.
+    previous_research=stage/'dist/previous-research.json'
+    shutil.copy2(stage/'dist/data.json',previous_research)
     run(stage, 'probe_sources.py', '--as-of', day)
     for script, extra in [
         ('update_domestic.py', []), ('source_czce.py', []),
@@ -127,8 +140,11 @@ def build_candidate(stage, day, start, run=run_script):
     if dce.get('coverage', {}).get('errors'):
         raise ValueError('Some DCE products failed; refusing a partial publication: ' +
                          json.dumps(dce['coverage']['errors'], ensure_ascii=False))
-    for name in ['merge_exchanges.py', 'source_rank_fallback.py', 'analyze_markets.py', 'check_analysis.py']:
+    for name in ['merge_exchanges.py', 'source_rank_fallback.py']:
         run(stage, name)
+    run(stage,'source_continuous.py','--previous',str(previous_research))
+    for name in ['analyze_markets.py','check_analysis.py','check_continuous.py']:
+        run(stage,name)
     return json.loads((stage / 'dist/data.json').read_text(encoding='utf-8'))
 
 

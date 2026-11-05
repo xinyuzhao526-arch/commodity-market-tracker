@@ -27,6 +27,13 @@ def snapshot(day='2026-10-23'):
 
 
 class PublicationTests(unittest.TestCase):
+    def test_published_continuous_history_cannot_be_rebased(self):
+        old=snapshot();new=snapshot('2026-10-26')
+        old['markets'][0]['continuous']={'history':[{'date':'2026-10-23','close':100}],'rollovers':[],'baseDate':'2026-10-23'}
+        new['markets'][0]['continuous']={'history':[{'date':'2026-10-23','close':99}],'rollovers':[],'baseDate':'2026-10-23'}
+        with self.assertRaisesRegex(ValueError,'continuous history lost or rebased'):
+            daily.validate_snapshot(new,'2026-10-26',old)
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)

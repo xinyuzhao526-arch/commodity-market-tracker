@@ -18,6 +18,8 @@ assert(all.yTicks.includes(0));assert(all.yMin<0&&all.yMax>1200);
 // A large OI change must not appear as a positive price return.
 assert(all.shown.find(m=>m.code==='small-base').analysis.return5<0);
 const empty=layout([],'focus');assert.equal(empty.shown.length,0);assert(Number.isFinite(empty.xLimit));
+const separate={...point('two-price-bases',90,20),fixedAnalysis:{return5:-2,oiReturn5:10}};
+assert(layout([separate],'all').xLimit<10,'Continuous return contaminated real-contract price/OI map');
 const m={name:'paper',main:{contract:'op2701'},analysis:{asOf:'2026-10-30',return5Start:'2026-10-23'},history:[{date:'2026-10-23',contract:'op2612',oi:999999},{date:'2026-10-23',contract:'op2701',oi:1314,close:3682},{date:'2026-10-30',contract:'op2701',oi:17006,close:3588}]};
 ctx.m=m;const endpoints=vm.runInContext('scatterEndpoints(m)',ctx);
 assert.equal(endpoints.start.oi,1314);assert.equal(endpoints.end.oi,17006);

@@ -1,6 +1,7 @@
-"""Derive dated, fixed-contract evidence from the embedded public data snapshot.
+"""Derive separately dated continuous-price research and actual-contract evidence.
 
-No forecasts, modelled fund flows, rolled contracts, interpolation or future bars.
+No forecasts, modelled fund flows, invented interpolation or future bars. Continuous
+research prices have explicit fixed-base ratio factors and auditable roll dates.
 """
 import collections, datetime as dt, json, math, pathlib, statistics
 ROOT=pathlib.Path(__file__).resolve().parents[1]
@@ -202,9 +203,63 @@ def derive(m, calendar):
     a['unknowns'].append('盘面标签未纳入库存、仓单和供需数据；已取得资料在独立交叉核对区展示。现货基差、连续订单与需求证据仍不完整；日行情不能识别开平仓方。')
     return a
 
+PRICE_FIELDS=('return1','return5','return20','return1Start','return5Start','return20Start',
+              'ma5','ma20','ma20Slope5','deviation20','trendDirection','trendLabel',
+              'priorHigh20','priorLow20','breakout','breakoutDirection','volatility20',
+              'atr14','natr14','distanceAtr20','deviationWatch','deviationEpisode','historyCount','missingRecent20')
+
+def continuous_research(m,calendar,fixed):
+    c=m['continuous'];points=c.get('history',[]);a=dict(fixed)
+    ready=c.get('status')=='ready' and points and points[-1]['date']==m['main']['date']
+    p=None
+    if ready:
+        symbol=m['code']+'.POST'
+        bars=[{**r,'contract':symbol,'volume':None,'oi':None} for r in points if r['date']<=m['main']['date']]
+        study_calendar=sorted(set(calendar)|{r['date'] for r in bars})
+        p=derive({'code':m['code'],'sector':m['sector'],'main':bars[-1],'history':bars,'ranks':[]},study_calendar)
+    for k in PRICE_FIELDS:a[k]=p.get(k) if p else None
+    a['trendLabel']='连续均线偏多' if a['trendDirection']==1 else '连续均线偏空' if a['trendDirection']==-1 else '连续均线分化' if a['trendDirection']==0 else '连续研究样本不足'
+    a['priceBasis']={'type':'ratio-post-adjusted-continuous','available':bool(ready),
+                     'baseDate':c.get('baseDate'),'latest':c.get('latest'),'contract':points[-1]['contract'] if points else None,
+                     'factor':points[-1]['factor'] if points else None,'provider':c.get('provider'),
+                     'error':c.get('error'),'rollCount':len(c.get('rollovers',[]))}
+    a['basis']='continuous research prices / actual representative-contract volume, OI and seats'
+    td=a['trendDirection'];pd=a['participationDirection'];sd=a['seatDirection']
+    a['seatTrendConflict']=td in (-1,1) and sd in (-1,1) and td!=sd
+    a['priceTrendConflict']=td in (-1,1) and sign(fixed['return1']) in (-1,1) and td!=sign(fixed['return1'])
+    a['dimensionsAvailable']=int(td is not None)+int(pd is not None or fixed['fixedOiChange'] is not None and fixed['return1'] is not None)+int(sd is not None)
+    a['alignedDimensions']=int(td in (-1,1))+int(td in (-1,1) and pd==td)+int(td in (-1,1) and sd==td and not a['seatMarginalConflict'])
+    a['status']='多维同向' if td in (-1,1) and pd==td and sd==td and not a['seatMarginalConflict'] else '存在分歧' if a['seatTrendConflict'] or a['seatMarginalConflict'] or a['priceTrendConflict'] else '证据缺失' if a['dimensionsAvailable']<3 else '待进一步确认'
+    a['evidence']=[];a['counterEvidence']=[]
+    if td in (-1,1):a['evidence'].append('比例后复权连续收盘与MA5均'+('高于' if td==1 else '低于')+'MA20；研究对应合约 '+c['history'][-1]['contract'].upper()+'。')
+    else:a['counterEvidence'].append(a['trendLabel']+'；不以固定合约均线默替连续研究指标。')
+    if fixed['fixedOiChange'] is not None:
+        (a['evidence'] if pd==td and td in (-1,1) else a['counterEvidence']).append('真实代表合约 '+m['main']['contract'].upper()+' 当日'+fixed['quadrant']+f"，持仓变化{fixed['fixedOiChange']:+,.0f}手；此处价格变化按该合约昨收。")
+    if sd is not None:
+        (a['evidence'] if sd==td and td in (-1,1) else a['counterEvidence']).append(f"真实代表合约当日买卖排名样本差{a['seatDifference']:+,.0f}手。")
+    if a['seatMarginalConflict']:a['counterEvidence'].append('席位存量差与当日增减项差反向。')
+    if finite(a['volumeRatio20']) and a['volumeRatio20']>=1.5:a['evidence' if not a['priceTrendConflict'] else 'counterEvidence'].append(f"真实代表合约量比{a['volumeRatio20']:.2f}倍，未对成交量复权。")
+    a['unknowns']=fixed['unknowns']+['连续序列为固定基准比例后复权研究价，不是当前可成交价格或策略实际收益；量仓、席位、月差和库存价格核对仍使用真实合约。']
+    a['flags']=[]
+    if a['seatTrendConflict']:a['flags'].append('连续趋势与席位样本差反向')
+    if a['seatMarginalConflict']:a['flags'].append('席位存量与增减项反向')
+    if a['priceTrendConflict']:a['flags'].append('真实合约当日价格与连续均线趋势反向')
+    if finite(a['volumeRatio20']) and a['volumeRatio20']>=1.5:a['flags'].append('真实合约成交量≥前20日均量1.5倍')
+    if finite(a['volumeRatio20']) and a['volumeRatio20']<.7:a['flags'].append('真实合约成交量低于前20日均量0.7倍')
+    if a['breakout']:a['flags'].append('后复权连续'+a['breakout'])
+    if finite(a['distanceAtr20']) and abs(a['distanceAtr20'])>=2:a['flags'].append('后复权连续偏离MA20至少2个ATR')
+    if not m.get('ranks'):a['flags'].append('缺少当日席位排名')
+    if not ready:a['flags'].append('后复权连续序列未覆盖当前行情日')
+    return a
+
 def analyze(data):
     calendar=sorted({h['date'] for m in data['markets'] if m['exchange'] in ('SHFE','INE') for h in m['history'] if h['date']<=data['asOf']})
-    for m in data['markets']:m['analysis']=derive(m,calendar)
+    for m in data['markets']:
+        fixed=derive(m,calendar)
+        if 'continuous' in m:
+            m['fixedAnalysis']=fixed
+            m['analysis']=continuous_research(m,calendar,fixed)
+        else:m['analysis']=fixed
     eligible=[m['analysis']['return20'] for m in data['markets'] if finite(m['analysis']['return20'])]
     vol=[m['analysis']['volatility20'] for m in data['markets'] if finite(m['analysis']['volatility20'])]
     for m in data['markets']:
@@ -214,7 +269,7 @@ def analyze(data):
     for sector in sorted({m['analysis']['sector'] for m in data['markets']}):
         ms=[m for m in data['markets'] if m['analysis']['sector']==sector];v=[m['analysis']['return20'] for m in ms if finite(m['analysis']['return20'])]
         sectors.append({'sector':sector,'count':len(ms),'return20Count':len(v),'positive20':sum(x>0 for x in v),'medianReturn20':statistics.median(v) if v else None,'bull':sum(m['analysis']['trendDirection']==1 for m in ms),'bear':sum(m['analysis']['trendDirection']==-1 for m in ms)})
-    data['research']={'version':'evidence-v1','asOf':data['asOf'],'calendar':calendar,'sectors':sectors,'strengthPeerCount':len(eligible),'volatilityPeerCount':len(vol),'aligned':sum(m['analysis']['status']=='多维同向' for m in data['markets']),'conflicts':sum(m['analysis']['status']=='存在分歧' for m in data['markets']),'rules':{'volumeExpansion':1.5,'volumeContraction':.7,'distanceAtr':2,'annualization':252,'breakoutLookback':20,'atrMethod':'14-day simple mean of true range','basis':'All return/volume/OI factors use one fixed representative contract. Price returns use previous close, distinct from raw overview previous settlement returns. Seat rankings are current-date independent lists; no multi-day seat inference.'}}
+    data['research']={'version':'evidence-v1','asOf':data['asOf'],'calendar':calendar,'sectors':sectors,'strengthPeerCount':len(eligible),'volatilityPeerCount':len(vol),'aligned':sum(m['analysis']['status']=='多维同向' for m in data['markets']),'conflicts':sum(m['analysis']['status']=='存在分歧' for m in data['markets']),'rules':{'volumeExpansion':1.5,'volumeContraction':.7,'distanceAtr':2,'annualization':252,'breakoutLookback':20,'atrMethod':'14-day simple mean of true range','basis':'Price research uses fixed-base ratio-post-adjusted continuous OHLC where available; missing continuous research is not replaced by fixed-contract returns. Volume/OI, seats and the price/OI map retain actual contracts. Research previous-close returns differ from overview previous-settlement returns. Seats are current-date independent lists.'}}
     return data
 
 if __name__=='__main__':
