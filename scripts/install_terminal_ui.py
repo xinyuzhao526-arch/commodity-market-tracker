@@ -24,7 +24,7 @@ s=re.sub(r'// END TERMINAL UI\s*(?=function render\()', '// END TERMINAL UI\n', 
 label='''<span class="chart-unit">${m.aggregateScope==='representative-contract'?(m.mainMatchedContinuous?'已匹配主力合约':'盘后代表合约'):'持仓量最大合约'}</span>'''
 while label+label in s:s=s.replace(label+label,label)
 p.write_text(s,encoding='utf-8')
-css='\n'.join((ROOT/'scripts'/name).read_text(encoding='utf-8') for name in ['terminal.css','terminal_readability.css'])
+css='\n'.join((ROOT/'scripts'/name).read_text(encoding='utf-8') for name in ['terminal.css','terminal_readability.css','terminal_visual.css'])
 (ROOT/'dist/style.css').write_text(css,encoding='utf-8')
 print('Terminal interface installed.')
 

@@ -24,4 +24,12 @@ const m={name:'paper',main:{contract:'op2701'},analysis:{asOf:'2026-10-30',retur
 ctx.m=m;const endpoints=vm.runInContext('scatterEndpoints(m)',ctx);
 assert.equal(endpoints.start.oi,1314);assert.equal(endpoints.end.oi,17006);
 assert.equal(endpoints.start.close,3682);assert.equal(endpoints.end.close,3588);
+// Display groups differ from the original fixed-contract analysis sectors.
+ctx.sectors=['油脂油料','有色金属（含贵金属）','黑色'];ctx.colors=['#b77e3e','#4a86c5','#8b76ad'];
+ctx.grouped=[{sector:'油脂油料',fixedAnalysis:{sector:'农产品'}},{sector:'有色金属（含贵金属）',fixedAnalysis:{sector:'贵金属'}},{sector:'黑色',fixedAnalysis:{sector:'黑色建材'}}];
+const renderedColors=vm.runInContext('grouped.map(m=>scatterSectorColor(m,sectors,colors))',ctx);
+assert.deepEqual(Array.from(renderedColors),ctx.colors,'Points must match their displayed sector legend, independent of historical factor classification');
+assert.equal(new Set(renderedColors).size,3);
+assert.equal(vm.runInContext('scatterSectorColor({sector:"unknown"},sectors,colors)',ctx),'var(--muted)');
 console.log('PASS: linear focus/all ranges, outlier disclosure, inclusive boundaries, missing values, negative price with positive OI and fixed-contract endpoints.');
+console.log('PASS: three displayed sector colors match legends despite legacy fixed-analysis sectors; unknown sector has an explicit fallback.');

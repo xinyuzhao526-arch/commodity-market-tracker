@@ -25,7 +25,7 @@ function terminalCommandResults(){
 }
 function terminalInit(){
  if(terminalPrefs.ready)return;terminalPrefs.ready=true;
- const root=document.documentElement;root.dataset.theme=terminalSafeRead('guanlan-theme','dark');
+ const root=document.documentElement;root.dataset.theme=terminalSafeRead('guanlan-theme','light');
  document.body.classList.toggle('rail-collapsed',terminalSafeRead('guanlan-rail','expanded')==='collapsed');
  const theme=()=>{$('#theme-toggle').textContent=root.dataset.theme==='dark'?'浅色':'深色';$('#theme-toggle').setAttribute('aria-label',root.dataset.theme==='dark'?'切换为浅色主题':'切换为深色主题')};
  theme();$('#theme-toggle').onclick=()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';terminalSave('guanlan-theme',root.dataset.theme);theme()};
@@ -51,7 +51,11 @@ function terminalSync(){
  $('#side-date').textContent=DATA.asOf;$('#terminal-date').textContent=DATA.asOf+' / 收盘';$('#terminal-date').title='数据快照日期 '+DATA.asOf+'，非实时行情';
  const ribbon=$('#market-ribbon');ribbon.innerHTML=['au','cu','rb','m','y','p','lc','i'].map(c=>DATA.markets.find(m=>m.code===c)).filter(Boolean).map(m=>`<button class="ribbon-quote" data-ribbon-code="${m.code}" aria-label="查看${m.name}证据"><span>${m.name}</span><b>${num(m.main.close,decimals(m))}</b><em class="${color(m.main.changePct)}">${signed(m.main.changePct,2)}%</em></button>`).join('');$$('[data-ribbon-code]').forEach(b=>b.onclick=()=>terminalJump(b.dataset.ribbonCode));
  $('#app').dataset.view=state.view;$('#export').innerHTML='<span>↓</span> '+(state.view==='research'?'导出研究':'导出数据');
- if(state.view==='research'){terminalMatrix();terminalInspector()}
+ if(state.view==='research'){
+  terminalMatrix();terminalInspector();
+  const pageHeading=$('#app .page-heading'),stats=$('#app .stats-grid'),brief=$('#app .research-brief');
+  if(pageHeading&&stats&&brief){pageHeading.insertAdjacentElement('afterend',stats);stats.insertAdjacentElement('afterend',brief)}
+ }
  $$('nav [data-view]').forEach(a=>a.setAttribute('aria-current',a.dataset.view===state.view?'page':'false'));
 }
 
@@ -91,7 +95,7 @@ const dimensionBindBase=bindResearchDetail;
 bindResearchDetail=function(){dimensionBindBase();$$('[data-dimension]').forEach(b=>{b.onclick=()=>{activeDimension=Number(b.dataset.dimension);$$('[data-dimension]').forEach(t=>{const yes=t===b;t.setAttribute('aria-selected',String(yes));t.tabIndex=yes?0:-1});$('#dimension-content').setAttribute('aria-labelledby',b.id);$('#dimension-content').innerHTML=dimensionArticle(selected(),activeDimension)};b.onkeydown=e=>{if(['ArrowRight','ArrowLeft','Home','End'].includes(e.key)){e.preventDefault();const n=e.key==='Home'?0:e.key==='End'?3:(Number(b.dataset.dimension)+(e.key==='ArrowRight'?1:3))%4;const next=$(`[data-dimension="${n}"]`);next.click();next.focus()}}})};
 function productResearchHome(){
  const host=document.createElement('section');host.className='product-research-home';host.innerHTML=`<div class="section-header"><h2 class="section-title">品种研究<span class="section-sub">选择产品，展开四个研究维度</span></h2></div><div class="product-sector-grid">${Object.keys(researchGroups).map((g,i)=>`<article class="panel product-sector"><div class="panel-top"><div><div class="eyebrow">0${i+1} / ${DATA.markets.filter(m=>m.sector===g).length} PRODUCTS</div><h3>${esc(g)}</h3></div></div><div class="product-buttons">${DATA.markets.filter(m=>m.sector===g).map(m=>`<button data-product="${m.code}"><strong>${esc(m.name)}</strong><small>${m.main.contract.toUpperCase()}</small><span class="${color(m.main.changePct)}">${factorPct(m.main.changePct)}</span></button>`).join('')}</div></article>`).join('')}</div><p class="chart-note">盘面：${DATA.asOf} 收盘快照。铜研究资料：2026-11-02 至 11-03 用户截图。相对强度分位仍以原始全市场样本计算。</p>`;
- const anchor=$('#app .page-heading');if(anchor)anchor.insertAdjacentElement('afterend',host);else $('#app').prepend(host);
+ const anchor=$('#app .research-brief')||$('#app .page-heading');if(anchor)anchor.insertAdjacentElement('afterend',host);else $('#app').prepend(host);
  $$('[data-product]').forEach(b=>b.onclick=()=>{activeDimension=0;selectResearch(b.dataset.product)});
 }
 
