@@ -1,7 +1,7 @@
 {
   "schema": "fundamentals-v1",
-  "asOf": "2026-11-04",
-  "checkedAt": "2026-11-05T02:03:30+08:00",
+  "asOf": "2026-11-05",
+  "checkedAt": "2026-11-06T02:08:23+08:00",
   "inventories": [
     {
       "id": "SHFE官方:cu:receipt:仓库",
@@ -110,6 +110,13 @@
           "change": -1605.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 6574.0,
+          "change": -1271.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -220,6 +227,13 @@
           "change": -1968.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 53012.0,
+          "change": -1146.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -330,6 +344,13 @@
           "change": -571.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 58918.0,
+          "change": -844.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -440,6 +461,13 @@
           "change": -1192.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 6974.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -550,6 +578,13 @@
           "change": -359.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 87483.0,
+          "change": -451.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -660,6 +695,13 @@
           "change": -243.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 1574.0,
+          "change": -173.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -770,6 +812,13 @@
           "change": -4196.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 200012.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -880,6 +929,13 @@
           "change": 0.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 9900.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -990,6 +1046,13 @@
           "change": -272.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 9126.0,
+          "change": -241.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -1100,6 +1163,13 @@
           "change": 1500.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 118404.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -1210,6 +1280,13 @@
           "change": -10957.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 1380708.0,
+          "change": 22088.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -1320,6 +1397,13 @@
           "change": -1494.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 32931.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -1430,6 +1514,13 @@
           "change": 0.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 22800.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -1540,6 +1631,13 @@
           "change": 0.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 0.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -1650,6 +1748,13 @@
           "change": -5884.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 204112.0,
+          "change": -588.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -1760,6 +1865,13 @@
           "change": 0.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 0.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -1870,6 +1982,13 @@
           "change": -117.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 55668.0,
+          "change": -124.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -1980,6 +2099,13 @@
           "change": 0.0,
           "previous": null,
           "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261104/ZH/all.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 427.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/dailystock_20261105/ZH/all.html"
         }
       ]
     },
@@ -2090,6 +2216,13 @@
           "change": 1000.0,
           "previous": null,
           "sourceUrl": "https://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261104/FutureDataWhsheet.xlsx"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 5270.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261105/FutureDataWhsheet.xlsx"
         }
       ]
     },
@@ -2200,6 +2333,13 @@
           "change": 0.0,
           "previous": null,
           "sourceUrl": "https://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261104/FutureDataWhsheet.xlsx"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 0.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261105/FutureDataWhsheet.xlsx"
         }
       ]
     },
@@ -2310,6 +2450,13 @@
           "change": 0.0,
           "previous": null,
           "sourceUrl": "https://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261104/FutureDataWhsheet.xlsx"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 27.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261105/FutureDataWhsheet.xlsx"
         }
       ]
     },
@@ -2420,6 +2567,13 @@
           "change": 0.0,
           "previous": null,
           "sourceUrl": "https://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261104/FutureDataWhsheet.xlsx"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 0.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261105/FutureDataWhsheet.xlsx"
         }
       ]
     },
@@ -2530,6 +2684,13 @@
           "change": 485.0,
           "previous": null,
           "sourceUrl": "https://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261104/FutureDataWhsheet.xlsx"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 3830.0,
+          "change": 75.0,
+          "previous": null,
+          "sourceUrl": "https://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261105/FutureDataWhsheet.xlsx"
         }
       ]
     },
@@ -2640,6 +2801,13 @@
           "change": 740.0,
           "previous": null,
           "sourceUrl": "https://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261104/FutureDataWhsheet.xlsx"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 3530.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://www.czce.com.cn/cn/DFSStaticFiles/Future/2026/20261105/FutureDataWhsheet.xlsx"
         }
       ]
     },
@@ -2650,7 +2818,7 @@
       "unit": "吨",
       "scope": "仓库",
       "provider": "SHFE官方",
-      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261016/ZH/all.html",
+      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261023/ZH/all.html",
       "frequency": "weekly",
       "history": [
         {
@@ -2683,7 +2851,7 @@
       "unit": "吨",
       "scope": "仓库",
       "provider": "SHFE官方",
-      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261016/ZH/all.html",
+      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261023/ZH/all.html",
       "frequency": "weekly",
       "history": [
         {
@@ -2716,7 +2884,7 @@
       "unit": "吨",
       "scope": "仓库",
       "provider": "SHFE官方",
-      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261016/ZH/all.html",
+      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261023/ZH/all.html",
       "frequency": "weekly",
       "history": [
         {
@@ -2749,7 +2917,7 @@
       "unit": "吨",
       "scope": "仓库",
       "provider": "SHFE官方",
-      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261016/ZH/all.html",
+      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261023/ZH/all.html",
       "frequency": "weekly",
       "history": [
         {
@@ -2782,7 +2950,7 @@
       "unit": "吨",
       "scope": "仓库",
       "provider": "SHFE官方",
-      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261016/ZH/all.html",
+      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261023/ZH/all.html",
       "frequency": "weekly",
       "history": [
         {
@@ -2815,7 +2983,7 @@
       "unit": "吨",
       "scope": "仓库",
       "provider": "SHFE官方",
-      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261016/ZH/all.html",
+      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261023/ZH/all.html",
       "frequency": "weekly",
       "history": [
         {
@@ -2848,7 +3016,7 @@
       "unit": "吨",
       "scope": "仓库",
       "provider": "SHFE官方",
-      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261016/ZH/all.html",
+      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261023/ZH/all.html",
       "frequency": "weekly",
       "history": [
         {
@@ -2881,7 +3049,7 @@
       "unit": "吨",
       "scope": "仓库",
       "provider": "SHFE官方",
-      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261016/ZH/all.html",
+      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261023/ZH/all.html",
       "frequency": "weekly",
       "history": [
         {
@@ -2914,7 +3082,7 @@
       "unit": "千克",
       "scope": "仓库",
       "provider": "SHFE官方",
-      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261016/ZH/all.html",
+      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261023/ZH/all.html",
       "frequency": "weekly",
       "history": [
         {
@@ -2947,7 +3115,7 @@
       "unit": "吨",
       "scope": "仓库",
       "provider": "SHFE官方",
-      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261016/ZH/all.html",
+      "sourceUrl": "https://www.shfe.com.cn/data/tradedata/future/stockdata/weeklystock_20261023/ZH/all.html",
       "frequency": "weekly",
       "history": [
         {
@@ -3080,6 +3248,13 @@
           "change": 0.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 4750.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "原字段ON_WARRANT_NUM（仓单数量），不作为社会库存；与官方系列不拼接。"
@@ -3189,6 +3364,13 @@
           "date": "2026-11-04",
           "value": 1082.0,
           "change": 70.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 1010.0,
+          "change": -72.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
@@ -3385,6 +3567,13 @@
           "change": -30.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 52749.0,
+          "change": -150.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "原字段ON_WARRANT_NUM（仓单数量），不作为社会库存；与官方系列不拼接。"
@@ -3496,6 +3685,13 @@
           "change": -200.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 27230.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "原字段ON_WARRANT_NUM（仓单数量），不作为社会库存；与官方系列不拼接。"
@@ -3584,6 +3780,13 @@
           "date": "2026-11-04",
           "value": 644.0,
           "change": 644.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 644.0,
+          "change": 0.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
@@ -3697,6 +3900,13 @@
           "change": 2279.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 84320.0,
+          "change": -189.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "原字段ON_WARRANT_NUM（仓单数量），不作为社会库存；与官方系列不拼接。"
@@ -3799,6 +4009,13 @@
           "date": "2026-11-04",
           "value": 1000.0,
           "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 900.0,
+          "change": -100.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
@@ -3912,6 +4129,13 @@
           "change": 2018.0,
           "previous": 19537.0,
           "sourceUrl": "http://www.gfex.com.cn/u/interfacesWebTdWbillWeeklyQuotes/loadList"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 21041.0,
+          "change": -514.0,
+          "previous": 21555.0,
+          "sourceUrl": "http://www.gfex.com.cn/u/interfacesWebTdWbillWeeklyQuotes/loadList"
         }
       ],
       "dateValidation": "接口gen_date回显，逐仓数量和增减校验",
@@ -4023,6 +4247,13 @@
           "value": 4986.0,
           "change": -25.0,
           "previous": 5011.0,
+          "sourceUrl": "http://www.gfex.com.cn/u/interfacesWebTdWbillWeeklyQuotes/loadList"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 5129.0,
+          "change": 143.0,
+          "previous": 4986.0,
           "sourceUrl": "http://www.gfex.com.cn/u/interfacesWebTdWbillWeeklyQuotes/loadList"
         }
       ],
@@ -4136,6 +4367,13 @@
           "change": -160.0,
           "previous": 21080.0,
           "sourceUrl": "http://www.gfex.com.cn/u/interfacesWebTdWbillWeeklyQuotes/loadList"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 18940.0,
+          "change": -1980.0,
+          "previous": 20920.0,
+          "sourceUrl": "http://www.gfex.com.cn/u/interfacesWebTdWbillWeeklyQuotes/loadList"
         }
       ],
       "dateValidation": "接口gen_date回显，逐仓数量和增减校验",
@@ -4248,6 +4486,13 @@
           "change": -92.0,
           "previous": 2697.0,
           "sourceUrl": "http://www.gfex.com.cn/u/interfacesWebTdWbillWeeklyQuotes/loadList"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 2595.0,
+          "change": -10.0,
+          "previous": 2605.0,
+          "sourceUrl": "http://www.gfex.com.cn/u/interfacesWebTdWbillWeeklyQuotes/loadList"
         }
       ],
       "dateValidation": "接口gen_date回显，逐仓数量和增减校验",
@@ -4359,6 +4604,13 @@
           "value": 30021.0,
           "change": -435.0,
           "previous": 30456.0,
+          "sourceUrl": "http://www.gfex.com.cn/u/interfacesWebTdWbillWeeklyQuotes/loadList"
+        },
+        {
+          "date": "2026-11-05",
+          "value": 28732.0,
+          "change": -1289.0,
+          "previous": 30021.0,
           "sourceUrl": "http://www.gfex.com.cn/u/interfacesWebTdWbillWeeklyQuotes/loadList"
         }
       ],
@@ -6391,34 +6643,25 @@
     {
       "source": "shfe-daily",
       "status": "ok",
-      "latest": "2026-11-04",
+      "latest": "2026-11-05",
       "errors": []
     },
     {
       "source": "shfe-weekly",
-      "status": "failed",
-      "latest": null,
-      "errors": [
-        {
-          "date": "2026-10-30",
-          "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
-        },
-        {
-          "date": "2026-10-23",
-          "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
-        }
-      ]
+      "status": "ok",
+      "latest": "2026-10-30",
+      "errors": []
     },
     {
       "source": "czce",
       "status": "ok",
-      "latest": "2026-11-04",
+      "latest": "2026-11-05",
       "errors": []
     },
     {
       "source": "gfex",
       "status": "ok",
-      "latest": "2026-11-04",
+      "latest": "2026-11-05",
       "errors": []
     },
     {
@@ -6475,9 +6718,8 @@
     },
     {
       "source": "casde",
-      "status": "ok",
-      "latest": "2026-10-09",
-      "url": "https://scs.moa.gov.cn/jcyj/202610/t20261009_6488446.htm"
+      "status": "failed",
+      "error": "HTTPError: 403 Client Error: Forbidden for url: https://scs.moa.gov.cn/jcyj/"
     }
   ]
 }
