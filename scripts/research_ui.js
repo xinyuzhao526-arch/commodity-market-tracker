@@ -2,7 +2,8 @@
 function factorPct(v,d=2){return v==null?'—':signed(v,d)+'%'}
 function priceMeanAt(m,date,n){const cal=DATA.research?.calendar;if(!cal){const all=validHistory(m),i=all.findIndex(h=>h.date===date);return i>=n-1?mean(all.slice(i-n+1,i+1).map(h=>h.close)):null}const i=cal.indexOf(date);if(i<n-1)return null;const days=cal.slice(i-n+1,i+1),map=new Map(validHistory(m).map(h=>[h.date,h.close]));return days.every(d=>map.has(d))?mean(days.map(d=>map.get(d))):null}
 function factorNum(v,d=2,suffix=''){return v==null?'—':num(v,d)+suffix}
-function researchBadge(a){return `<span title="${a.asOf} 收盘规则状态；不预测下一交易日" class="badge ${a.status==='多维同向'?'positive':a.status==='存在分歧'?'negative':''}">历史${a.status}</span>`}
+function researchStatusLabel(a){return a.status==='多维同向'&&a.trendDirection===1?'一致偏多':a.status==='多维同向'&&a.trendDirection===-1?'一致偏空':a.status}
+function researchBadge(a){const label=researchStatusLabel(a);return `<span title="${a.asOf} 收盘规则状态；不预测下一交易日" class="badge ${a.status==='多维同向'?'positive':a.status==='存在分歧'?'negative':''}">${a.status==='多维同向'?'':'历史'}${label}</span>`}
 function researchMetric(label,value,note){return `<div class="factor-metric"><div>${label}</div><strong>${value}</strong><small>${note}</small></div>`}
 
 const deviationState={filter:'全部',expanded:false};
@@ -113,7 +114,7 @@ function bindResearch(){
 }
 function exportResearch(){
  const heads=['日期','品种','合约','交易所','5日收盘收益%','20日收盘收益%','20日收益分位','可比样本数','5日同合约持仓变化%','当日同合约持仓变化_手','当日价仓象限','20日量比','20日年化波动%','ATR14_价格单位','MA20_五日变化%','收盘乖离MA20%','收盘偏离MA20_ATR','席位样本差_手','席位样本差占合约OI%','多空增减项差_手','买单前5占买单样本%','卖单前5占卖单样本%','证据状态','支持观察','反向观察','未知项','行情来源'];
- const rows=DATA.markets.map(m=>{const a=m.analysis;return [DATA.asOf,m.name,m.main.contract,m.exchange,a.return5,a.return20,a.strengthPercentile20,a.strengthPeerCount,a.oiReturn5,a.fixedOiChange,a.quadrant,a.volumeRatio20,a.volatility20,a.atr14,a.ma20Slope5,a.deviation20,a.distanceAtr20,a.seatDifference,a.seatDifferencePctOi,a.seatDeltaDifference,a.seatLongTop5Share,a.seatShortTop5Share,a.status,a.evidence.join('；'),a.counterEvidence.join('；'),a.unknowns.join('；'),sourceOf(m).url]});
+ const rows=DATA.markets.map(m=>{const a=m.analysis;return [DATA.asOf,m.name,m.main.contract,m.exchange,a.return5,a.return20,a.strengthPercentile20,a.strengthPeerCount,a.oiReturn5,a.fixedOiChange,a.quadrant,a.volumeRatio20,a.volatility20,a.atr14,a.ma20Slope5,a.deviation20,a.distanceAtr20,a.seatDifference,a.seatDifferencePctOi,a.seatDeltaDifference,a.seatLongTop5Share,a.seatShortTop5Share,researchStatusLabel(a),a.evidence.join('；'),a.counterEvidence.join('；'),a.unknowns.join('；'),sourceOf(m).url]});
  const csv='\ufeff'+[[...heads,'均值偏离观察','关注方向','当日反向收盘','盘中越界后收回'],...rows.map((row,i)=>{const d=DATA.markets[i].analysis.deviationWatch;return [...row,d?.label||'',d?.focus||'',d?String(d.retracing):'',d?String(d.rangeReentry):'']})].map(row=>row.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download=`商品研究终端_研究因子与证据_${DATA.asOf}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('已导出当前三个板块的研究因子、证据和来源');
 }
 // END RESEARCH UI
