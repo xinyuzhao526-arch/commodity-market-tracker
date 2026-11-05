@@ -1,6 +1,6 @@
-# 商品研究终端 · 境内商品研究
+# 商品市场追踪
 
-[在线研究终端](https://xinyuzhao526-arch.github.io/guanlan-commodities/) · [下载离线 HTML](https://xinyuzhao526-arch.github.io/guanlan-commodities/guanlan.html) · [自动更新记录](https://github.com/xinyuzhao526-arch/guanlan-commodities/actions)
+[在线网页](https://xinyuzhao526-arch.github.io/commodity-market-tracker/) · [下载离线 HTML](https://xinyuzhao526-arch.github.io/commodity-market-tracker/market-tracker.html) · [自动更新记录](https://github.com/xinyuzhao526-arch/commodity-market-tracker/actions)
 
 这是一个以国内商品为主线的盘后研究工作台。它把行情、均线、量仓、席位、偏离过程及已取得的产业资料组织成可核查的研究线索，并同时保留反向证据和缺失项。
 
@@ -219,7 +219,7 @@ python scripts/refresh_daily.py
 python scripts/source_live_fundamentals.py
 python scripts/install_research_ui.py
 python scripts/install_terminal_ui.py
-python scripts/export_html.py --output dist/guanlan.html
+python scripts/export_html.py --output dist/market-tracker.html
 ```
 
 `refresh_daily.py`默认选择最近已收盘工作日；指定日期使用 `--as-of YYYY-MM-DD`。已经发布的相同或更早日期不会默认重复更新，确需重新校验同日时使用 `--rebuild`；该选项不允许回滚已发布日期。
@@ -230,7 +230,7 @@ python scripts/export_html.py --output dist/guanlan.html
 python scripts/analyze_markets.py
 python scripts/install_research_ui.py
 python scripts/install_terminal_ui.py
-python scripts/export_html.py --output dist/guanlan.html
+python scripts/export_html.py --output dist/market-tracker.html
 ```
 
 两个界面安装脚本的顺序为先研究界面、后终端界面。终端安装会内嵌国内研究与实物序列，并更新脚本版本。预览多文件网页：

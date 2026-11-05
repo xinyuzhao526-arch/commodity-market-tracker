@@ -37,7 +37,7 @@ def official_report_available(day, cache):
     url = 'https://www.shfe.com.cn/data/tradedata/future/dailydata/' + filename
     for attempt in range(3):
         try:
-            request = urllib.request.Request(url, headers={'User-Agent': 'GuanlanResearch/1.0'})
+            request = urllib.request.Request(url, headers={'User-Agent': 'CommodityMarketTracker/1.0'})
             with urllib.request.urlopen(request, timeout=25) as response:
                 raw = response.read()
             doc = json.loads(raw)
@@ -159,7 +159,7 @@ def refresh(root, day, start, *, rebuild=False, preflight=official_report_availa
     with tempfile.TemporaryDirectory(prefix='.refresh-', dir=root) as temp:
         stage = Path(temp)
         shutil.copytree(root / 'scripts', stage / 'scripts', ignore=shutil.ignore_patterns('__pycache__'))
-        shutil.copytree(root / 'dist', stage / 'dist', ignore=shutil.ignore_patterns('guanlan.html'))
+        shutil.copytree(root / 'dist', stage / 'dist', ignore=shutil.ignore_patterns('market-tracker.html'))
         (stage / 'data').mkdir()
         cached = root / 'data/raw'
         if cached.exists():
@@ -168,7 +168,7 @@ def refresh(root, day, start, *, rebuild=False, preflight=official_report_availa
             candidate = builder(stage, day, start)
             counts = validate_snapshot(candidate, day, previous, start)
             # A failed exporter also must leave the published data intact.
-            run_script(stage, 'export_html.py', '--output', str(stage / 'dist/guanlan.html'))
+            run_script(stage, 'export_html.py', '--output', str(stage / 'dist/market-tracker.html'))
             (root / 'data').mkdir(exist_ok=True)
             for packet in stage.glob('data/*-markets.json'):
                 shutil.copy2(packet, root / 'data' / packet.name)
@@ -192,7 +192,7 @@ def report(result):
             out.write(f"changed={str(result.get('changed', False)).lower()}\nas_of={result.get('asOf', '')}\n")
     if os.environ.get('GITHUB_STEP_SUMMARY'):
         with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as out:
-            out.write(f"### 商品研究终端盘后更新\n\n状态：`{result['status']}`\n\n最新完整快照：**{result.get('asOf', '未改变')}**\n\n")
+            out.write(f"### 商品市场追踪盘后更新\n\n状态：`{result['status']}`\n\n最新完整快照：**{result.get('asOf', '未改变')}**\n\n")
             if result['status'] == 'no-published-report':
                 out.write('目标日期尚无可读取的上期所正式报告（可能休市或尚未发布）；保留上一份快照。\n')
 

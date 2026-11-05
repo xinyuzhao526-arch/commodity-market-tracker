@@ -11,3 +11,4 @@ __pycache__/
 dist/guanlan.html
 .venv/
 *.log
+dist/market-tracker.html

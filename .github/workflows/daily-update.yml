@@ -92,7 +92,7 @@ jobs:
           path: data/raw
           key: commodity-raw-v2-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Build offline HTML
-        run: python scripts/export_html.py --output dist/guanlan.html
+        run: python scripts/export_html.py --output dist/market-tracker.html
       - name: Commit the complete snapshot
         if: steps.refresh.outputs.changed == 'true' || steps.rank_fallback.outputs.changed == 'true' || steps.fundamentals.outputs.changed == 'true'
         env:
@@ -107,8 +107,8 @@ jobs:
       - name: Downloadable offline dashboard
         uses: actions/upload-artifact@v4
         with:
-          name: guanlan-offline-${{ github.run_number }}
-          path: dist/guanlan.html
+          name: commodity-market-tracker-offline-${{ github.run_number }}
+          path: dist/market-tracker.html
           if-no-files-found: error
           retention-days: 30
       - name: Prepare Pages site
