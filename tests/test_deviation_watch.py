@@ -73,5 +73,47 @@ class DeviationWatchTest(unittest.TestCase):
         m['history'].append(future)
         self.assertEqual(derive(m,days+['2027-01-01'])['deviationWatch'],a['deviationWatch'])
 
+    def test_repair_retained_after_threshold_and_expires_after_five_sessions(self):
+        m,days=self.market([100]*24+[60]+[95]*6)
+        m['main']=m['history'][25]
+        a=derive(m,days)
+        self.assertIsNone(a['deviationWatch'])
+        e=a['deviationEpisode']
+        self.assertEqual(e['firstAt'],days[24])
+        self.assertEqual(e['peakAt'],days[24])
+        self.assertEqual(e['phase'],'阈值内修复')
+        self.assertEqual(e['sessionsAfterHit'],1)
+        self.assertGreater(e['gapContractionPct'],80)
+        # Future rows are already present but must not affect the past episode.
+        prefix=copy.deepcopy(m);prefix['history']=prefix['history'][:26]
+        self.assertEqual(derive(prefix,days[:26])['deviationEpisode'],e)
+        m['main']=m['history'][29]
+        self.assertIsNotNone(derive(m,days)['deviationEpisode'])
+        m['main']=m['history'][30]
+        self.assertIsNone(derive(m,days)['deviationEpisode'])
+
+    def test_repair_is_symmetric_and_atr_expansion_is_not_price_recovery(self):
+        m,days=self.market([100]*24+[140,105])
+        a=derive(m,days)
+        self.assertEqual(a['deviationEpisode']['side'],'above')
+        self.assertEqual(a['deviationEpisode']['phase'],'阈值内修复')
+        m,days=self.market([100]*24+[60,60])
+        m['history'][-1].update(high=300,low=1)
+        a=derive(m,days)
+        self.assertIsNone(a['deviationWatch'])
+        # ATR has ballooned, but the price/MA gap has barely contracted.
+        self.assertLess(a['deviationEpisode']['gapContractionPct'],10)
+        self.assertFalse(a['deviationEpisode']['retracing'])
+
+    def test_missing_history_breaks_episode_and_liquidity_is_separate(self):
+        m,days=self.market([100]*24+[60,95])
+        m['history'].pop(-2)
+        a=derive(m,days)
+        self.assertIsNone(a['deviationEpisode'])
+        self.assertTrue(a['liquidity']['low'])
+        m,days=self.market([100]*24+[60,95])
+        m['main']['volume']=2000;m['main']['oi']=2000
+        self.assertFalse(derive(m,days)['liquidity']['low'])
+
 
 if __name__=='__main__':unittest.main()

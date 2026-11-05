@@ -1,12 +1,12 @@
 // Describe the moving-average state, daily price action and distance separately.
 // A rebound is an observed close-to-close move, not a trend reversal forecast.
 function trendContextMarkup(m){
- const t=trend(m),a=m.analysis||{},day=a.return1,d=a.deviationWatch;
+ const t=trend(m),a=m.analysis||{},day=a.return1,d=deviationObservation(a);
  const meanLabel={bull:'均线偏多',bear:'均线偏空',mixed:'均线分化'}[t.id]||t.name;
  const dayLabel=!Number.isFinite(day)?'昨收比较缺失':day===0?'当日持平':day>0?(t.id==='bear'?'当日反弹':'当日上涨'):(t.id==='bull'?'当日回落':'当日下跌');
  const dayText=dayLabel+(Number.isFinite(day)?' '+signed(day,2)+'% · 较昨收':'');
  const distance=Number.isFinite(a.distanceAtr20)?`距 MA20 ${signed(a.distanceAtr20,2)} ATR`:'均值偏离样本不足';
- return `<div class="trend-context" aria-label="${esc(m.name)}均线与短线观察"><span class="badge ${t.class}" title="${esc(a.asOf||m.main.date)}：收盘价与MA5相对MA20的位置；不预测下一交易日">${esc(meanLabel)}</span><strong class="trend-day ${Number.isFinite(day)?color(day):''}">${esc(dayText)}</strong>${d?`<span class="trend-distance">${esc(d.label)} ${esc(signed(a.distanceAtr20,2))} ATR · ${esc(d.focus)}</span><small class="metric-note">偏离不代表必然反转</small>`:`<span class="trend-distance">${esc(distance)}</span>`}</div>`;
+ return `<div class="trend-context" aria-label="${esc(m.name)}均线与短线观察"><span class="badge ${t.class}" title="${esc(a.asOf||m.main.date)}：收盘价与MA5相对MA20的位置；不预测下一交易日">${esc(meanLabel)}</span><strong class="trend-day ${Number.isFinite(day)?color(day):''}">${esc(dayText)}</strong>${a.liquidity?.low?'<small class="research-quality-note">低流动性 · 谨慎解读</small>':''}${a.deviationEpisode?`<small class="episode-summary">${esc(a.deviationEpisode.phase)} · 首次观察 ${esc(a.deviationEpisode.firstAt)}</small>`:''}${d?`<span class="trend-distance">${esc(d.label)} ${esc(signed(a.distanceAtr20,2))} ATR · ${esc(d.focus)}</span><small class="metric-note">偏离不代表必然反转</small>`:`<span class="trend-distance">${esc(distance)}</span>`}</div>`;
 }
 const trendContextTableBase=table;
 table=function(){

@@ -49,6 +49,56 @@ def deviation_watch(a, last):
             'caveat':'偏离可能通过横盘或均线移动收敛；尚不能确认趋势反转。'}
 
 
+def deviation_episode(history, dates):
+    """Track observed excursions; retain five sessions after the last threshold hit.
+
+    Each point uses only its own trailing MA20/ATR14. Missing sessions break the
+    episode. Gap contraction measures price-minus-MA, not returns or probability.
+    """
+    episode=None
+    for i,date in enumerate(dates):
+        rows=[history.get(d) for d in dates[max(0,i-19):i+1]]
+        if len(rows)<20 or any(not r or any(not finite(r.get(k)) for k in ('close','high','low')) for r in rows):
+            episode=None
+            continue
+        ma=avg([r['close'] for r in rows]);last=rows[-1]
+        tr=[max(rows[j]['high']-rows[j]['low'],abs(rows[j]['high']-rows[j-1]['close']),abs(rows[j]['low']-rows[j-1]['close'])) for j in range(6,20)]
+        atr=avg(tr)
+        if not positive(atr):
+            episode=None
+            continue
+        gap=last['close']-ma;distance=gap/atr;side='above' if distance>0 else 'below'
+        if abs(distance)>=2:
+            if not episode or side!=episode['side']:
+                episode={'side':side,'firstAt':date,'peakAt':date,'peakDistance':distance,'peakGap':abs(gap)}
+            episode['lastHitAt']=date;episode['lastHitIndex']=i
+            if abs(distance)>abs(episode['peakDistance']):
+                episode.update(peakAt=date,peakDistance=distance,peakGap=abs(gap))
+        if not episode:
+            continue
+        if i-episode['lastHitIndex']>5:
+            episode=None
+            continue
+        crossed=gap==0 or side!=episode['side']
+        previous=episode.get('latestDistance')
+        phase=('越过均线' if crossed else '阈值内修复' if abs(distance)<2 else
+               '偏离扩大' if previous is not None and abs(distance)>abs(previous) else
+               '偏离收敛' if previous is not None and abs(distance)<abs(previous) else '偏离持续')
+        previous_close=rows[-2]['close'];day=change(last['close'],previous_close)
+        above=episode['side']=='above';retracing=day<0 if above else day>0
+        episode.update(latestAt=date,latestDistance=distance,phase=phase,
+                       sessionsAfterHit=i-episode['lastHitIndex'],
+                       gapContractionPct=max(0,min(100,(1-(0 if crossed else abs(gap))/episode['peakGap'])*100)),
+                       label=('上方' if above else '下方')+('偏离' if abs(distance)>=2 and not crossed else '偏离后修复'),
+                       focus='均值跨越后跟踪' if crossed else '关注回调风险' if above else '关注反弹可能',retracing=retracing,rangeReentry=False,
+                       priceCue=('当日回落' if above else '当日反弹') if retracing else '当日未向均值方向收盘',
+                       observations=[('当日收盘低于昨收' if above else '当日收盘高于昨收')] if retracing else [],
+                       caveat='价均差收敛可来自价格、均线移动；不是收益率或反转概率。')
+    if episode:
+        episode.pop('lastHitIndex',None)
+    return episode
+
+
 def derive(m, calendar):
     end=m['main']['date']; dates=[d for d in calendar if d<=end]
     history={h['date']:h for h in m['history'] if h.get('contract')==m['main']['contract'] and positive(h.get('close')) and h['date']<=end}
@@ -94,6 +144,10 @@ def derive(m, calendar):
     a['natr14']=a['atr14']/last['close']*100 if last and finite(a['atr14']) else None
     a['distanceAtr20']=(last['close']-a['ma20'])/a['atr14'] if last and positive(a['atr14']) and finite(a['ma20']) else None
     a['deviationWatch']=deviation_watch(a,last)
+    a['deviationEpisode']=deviation_episode(history,dates)
+    volume=last.get('volume') if last else None;open_interest=last.get('oi') if last else None
+    a['liquidity']={'low':finite(volume) and volume<1000 or finite(open_interest) and open_interest<1000,
+                    'volume':volume,'oi':open_interest,'rule':'当日代表合约成交量或持仓量低于1000手，仅作流动性提示，非预测阈值'}
     a['fixedOiChange']=last['oi']-prev['oi'] if last and prev and finite(last.get('oi')) and finite(prev.get('oi')) else None
     p,oi=sign(a['return1']),sign(a['fixedOiChange'])
     quadrant={(1,1):'涨价增仓',(-1,1):'跌价增仓',(1,-1):'涨价减仓',(-1,-1):'跌价减仓'}
@@ -145,7 +199,7 @@ def derive(m, calendar):
     if finite(a['volumeRatio20']) and (a['volumeRatio20']<.7 or a['volumeRatio20']>=1.5):
         (a['counterEvidence'] if a['volumeRatio20']<.7 or a['priceTrendConflict'] else a['evidence']).append(f"代表合约成交量为前20个交易日均量的{a['volumeRatio20']:.2f}倍。")
     a['unknowns'].append('固定合约的量仓变化可能受移仓换月影响，不能等同品种总持仓增减或真实资金流。')
-    a['unknowns'].append('当前未接入现货基差、库存与仓单，无法验证供需解释；日行情不能识别开平仓方。')
+    a['unknowns'].append('盘面标签未纳入库存、仓单和供需数据；已取得资料在独立交叉核对区展示。现货基差、连续订单与需求证据仍不完整；日行情不能识别开平仓方。')
     return a
 
 def analyze(data):

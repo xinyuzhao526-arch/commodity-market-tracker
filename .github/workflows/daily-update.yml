@@ -58,6 +58,7 @@ jobs:
           python scripts/check_analysis.py
           node scripts/check_scatter.cjs
           node scripts/check_domestic_research.cjs
+          node scripts/check_research_quality.cjs
           python scripts/check_live_fundamentals.py
           python -m unittest discover -s tests -v
       - name: Fetch and validate all exchanges
