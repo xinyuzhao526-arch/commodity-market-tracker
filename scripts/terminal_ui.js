@@ -25,12 +25,10 @@ function terminalCommandResults(){
 }
 function terminalInit(){
  if(terminalPrefs.ready)return;terminalPrefs.ready=true;
- const root=document.documentElement;root.dataset.theme=terminalSafeRead('guanlan-theme','dark');root.dataset.density=terminalSafeRead('guanlan-density','compact');
+ const root=document.documentElement;root.dataset.theme=terminalSafeRead('guanlan-theme','dark');
  document.body.classList.toggle('rail-collapsed',terminalSafeRead('guanlan-rail','expanded')==='collapsed');
  const theme=()=>{$('#theme-toggle').textContent=root.dataset.theme==='dark'?'浅色':'深色';$('#theme-toggle').setAttribute('aria-label',root.dataset.theme==='dark'?'切换为浅色主题':'切换为深色主题')};
- const density=()=>{$('#density-toggle').textContent=root.dataset.density==='compact'?'紧凑':'舒展';$('#density-toggle').setAttribute('aria-label','切换信息密度，当前'+$('#density-toggle').textContent)};
- theme();density();$('#theme-toggle').onclick=()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';terminalSave('guanlan-theme',root.dataset.theme);theme()};
- $('#density-toggle').onclick=()=>{root.dataset.density=root.dataset.density==='compact'?'comfortable':'compact';terminalSave('guanlan-density',root.dataset.density);density()};
+ theme();$('#theme-toggle').onclick=()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';terminalSave('guanlan-theme',root.dataset.theme);theme()};
  $('#nav-toggle').onclick=()=>{const c=document.body.classList.toggle('rail-collapsed');terminalSave('guanlan-rail',c?'collapsed':'expanded');$('#nav-toggle').setAttribute('aria-label',c?'展开侧边导航':'收起侧边导航')};
  $('#command-open').onclick=openCommand;$('#command-close').onclick=closeCommand;$('#command-menu').onclick=e=>{if(e.target===$('#command-menu'))closeCommand()};
  $('#command-input').oninput=()=>{terminalPrefs.commandIndex=0;terminalCommandResults()};
