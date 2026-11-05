@@ -47,7 +47,7 @@ function terminalMatrix(){
  if($('#jump-research-method'))$('#jump-research-method').onclick=e=>{e.preventDefault();const fold=$('#research-method').closest('details');if(fold)fold.open=true;$('#research-method').scrollIntoView({behavior:'smooth',block:'start'})};
 }
 const terminalHeadingBase=heading;
-heading=function(title,sub,kicker){const titles={research:'研究雷达',overview:'市场概览',trends:'趋势全景',positions:'持仓结构',sources:'数据与方法'};const subs={research:'均值偏离观察、横截面强弱与历史席位证据',overview:'收盘价格、成交与持仓变化',trends:'固定合约趋势状态与跨品种比较',positions:'会员排名、样本差与持仓集中度',sources:'数据覆盖、计算口径与可用性'};return terminalHeadingBase(titles[state.view]||title,subs[state.view]||sub,kicker)};
+heading=function(title,sub,kicker){const titles={research:'研究雷达',overview:'市场概览',trends:'趋势全景',positions:'持仓结构',sources:'数据与方法'};const subs={research:'均值偏离观察、横截面强弱与历史席位证据',overview:'收盘价格、成交与持仓变化',trends:'均线方向、当日反弹或回落与均值偏离' ,positions:'会员排名、样本差与持仓集中度',sources:'数据覆盖、计算口径与可用性'};return terminalHeadingBase(titles[state.view]||title,subs[state.view]||sub,kicker)};
 function terminalSync(){
  terminalInit();if(terminalPrefs.previousView!==state.view)closeInspector();terminalPrefs.previousView=state.view;
  $('#side-date').textContent=DATA.asOf;$('#terminal-date').textContent=DATA.asOf+' / 收盘';$('#terminal-date').title='数据快照日期 '+DATA.asOf+'，非实时行情';
