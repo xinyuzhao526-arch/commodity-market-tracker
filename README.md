@@ -1,5 +1,7 @@
 # 商品市场追踪
 
+2026-11-06：本地默认采集已切换为东方财富公开逐合约日线、会员排名及仓单接口；详见[东方财富接入说明](东方财富接入说明.md)。不需要网站密码，不等于已取得 Choice API 权限。未验证的产量/供需数据保留旧统计期，默认停止调用其他站点。下文历史方法说明及在线页面不代表本次改动已发布。
+
 [在线网页](https://xinyuzhao526-arch.github.io/commodity-market-tracker/) · [下载离线 HTML](https://xinyuzhao526-arch.github.io/commodity-market-tracker/market-tracker.html) · [自动更新记录](https://github.com/xinyuzhao526-arch/commodity-market-tracker/actions)
 
 这是一个以国内商品为主线的盘后研究工作台。它把行情、均线、量仓、席位、偏离过程及已取得的产业资料组织成可核查的研究线索，并同时保留反向证据和缺失项。

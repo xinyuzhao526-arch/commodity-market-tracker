@@ -47,12 +47,6 @@ jobs:
           path: data/raw
           key: commodity-raw-v2-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: commodity-raw-v2-
-      - name: Bootstrap validated official history on cache miss
-        if: steps.raw_cache.outputs.cache-matched-key == ''
-        run: |
-          if curl --fail --location --retry 2 --max-time 90 -o "$RUNNER_TEMP/shfe-source-cache.zip" "https://github.com/$GITHUB_REPOSITORY/releases/download/source-cache/shfe-source-cache.zip"; then
-            python scripts/restore_source_cache.py "$RUNNER_TEMP/shfe-source-cache.zip"
-          fi
       - name: Verify research arithmetic and refresh transaction
         run: |
           python scripts/check_analysis.py
@@ -73,7 +67,7 @@ jobs:
           args=()
           if [ -n "$TARGET_DATE" ]; then args+=(--as-of "$TARGET_DATE"); fi
           if [ "$REBUILD" = "true" ]; then args+=(--rebuild); fi
-          python scripts/refresh_daily.py "${args[@]}"
+          python scripts/refresh_daily.py --provider eastmoney "${args[@]}"
       - name: Recheck missing rankings when close is already published
         id: rank_fallback
         if: github.event_name != 'push' && steps.refresh.outputs.changed != 'true'
@@ -82,7 +76,7 @@ jobs:
         id: fundamentals
         if: github.event_name != 'push'
         run: |
-          python scripts/source_live_fundamentals.py
+          python scripts/source_live_fundamentals.py --provider eastmoney
           python scripts/install_terminal_ui.py
           python scripts/check_live_fundamentals.py
       - name: Save validated source cache

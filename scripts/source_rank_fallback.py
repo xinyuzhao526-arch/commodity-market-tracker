@@ -126,6 +126,7 @@ def fetch_rankings(market, day, *, cache=ROOT / 'data/raw/eastmoney-ranks', refr
 
 def enrich_snapshot(data, *, fetcher=fetch_rankings):
     day = data['asOf']
+    primary = data.get('version') == 'eastmoney-public-v1'
     attempts = []
     filled = 0
     for market in data['markets']:
@@ -139,12 +140,12 @@ def enrich_snapshot(data, *, fetcher=fetch_rankings):
                 if previous_source:
                     market['rankPrimarySource'] = previous_source
                 market['ranks'] = ranks
-                market['rankSource'] = {'name': '东方财富·合约会员持仓龙虎榜（备用）',
+                market['rankSource'] = {'name': '东方财富·合约会员持仓龙虎榜' + ('' if primary else '（备用）'),
                                         'provider': 'eastmoney', 'url': url, 'landing': PAGE,
                                         'date': day, 'contract': market['main']['contract'],
-                                        'official': False, 'fallback': True}
-                market['rankingStatus'] = 'available-fallback'
-                market['rankingNote'] = '官方排名未取得；采用东方财富同日、同合约独立多空排名，最多各前20名，不代表全市场净持仓。'
+                                        'official': False, 'fallback': not primary}
+                market['rankingStatus'] = 'available' if primary else 'available-fallback'
+                market['rankingNote'] = ('采用东方财富主来源；' if primary else '官方排名未取得；') + '采用同日、同合约独立多空排名，最多各前20名，不代表全市场净持仓。'
                 market['rankingFallbackNote'] = ''
                 attempt['status'] = 'filled'
                 filled += 1
@@ -162,10 +163,11 @@ def enrich_snapshot(data, *, fetcher=fetch_rankings):
         source['rankingStatus'] = f"{sum(bool(m.get('ranks')) for m in markets)} / {len(markets)} 个品种"
         source['rankingOfficialCount'] = len(official)
         source['rankingFallbackCount'] = len(fallback)
-        source['rankingSourceNote'] = f'官方排名 {len(official)} 个；东方财富备用排名 {len(fallback)} 个。备用来源单独标识，不改变行情来源。'
+        source['rankingSourceNote'] = (f'东方财富主来源排名 {len(fallback)} 个。' if primary else
+                                      f'官方排名 {len(official)} 个；东方财富备用排名 {len(fallback)} 个。备用来源单独标识，不改变行情来源。')
         if fallback:
             source['rankUrl'] = PAGE
-        if source['exchange'] == 'DCE':
+        if source['exchange'] == 'DCE' and data.get('version') != 'eastmoney-public-v1':
             source['note'] = ('行情使用已注明的新浪具体合约日线或经核验的盘后快照，仅为代表合约口径。'
                               '会员排名按同日、同合约从东方财富补充；未返回有效记录的合约仍留空。')
     summary = {'date': day, 'requested': len(attempts), 'filled': filled,

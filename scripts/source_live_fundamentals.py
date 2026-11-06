@@ -258,7 +258,7 @@ def fetch_official(root, source, day, refresh=False):
 
 
 def fetch_em(root, code, exchange, as_of, start):
-    symbol=code if exchange=='GFEX' else code.upper()
+    symbol=code if exchange in {'GFEX','INE'} else code.upper()
     params={'reportName':'RPT_FUTU_STOCKDATA','columns':'ALL','filter':f'(SECURITY_CODE="{symbol}")(TRADE_DATE>=\'{start}\')(TRADE_DATE<=\'{as_of}\')',
             'pageSize':100,'pageNumber':1,'sortColumns':'TRADE_DATE','sortTypes':'-1','source':'WEB','client':'WEB'}
     raw,path=request_raw(root,f'em-{code}-{start}-{as_of}',EM,params=params,refresh=True)
@@ -285,14 +285,15 @@ def merge_series(existing,incoming,as_of):
     return list(merged.values())
 
 
-def refresh(root, as_of, history_days=18):
+def refresh(root, as_of, history_days=18, provider='eastmoney'):
     output=root/'dist/fundamentals.json'
     old=json.loads(output.read_text(encoding='utf-8')) if output.exists() else {'inventories':[],'supplies':[]}
     if old.get('asOf','')>as_of: raise ValueError('refusing fundamentals rollback')
     end=dt.date.fromisoformat(as_of);start=(end-dt.timedelta(days=history_days)).isoformat()
     days=[(end-dt.timedelta(days=i)).isoformat() for i in range(history_days+1) if (end-dt.timedelta(days=i)).weekday()<5]
-    jobs=[(source,day) for source in ['shfe-daily','czce','gfex'] for day in days]
-    jobs += [('shfe-weekly',day) for day in days if dt.date.fromisoformat(day).weekday()==4]
+    jobs=[(source,day) for source in ['shfe-daily','czce','gfex'] for day in days] if provider=='exchanges' else []
+    if provider=='exchanges':
+        jobs += [('shfe-weekly',day) for day in days if dt.date.fromisoformat(day).weekday()==4]
     def job(item):
         source,day=item
         try:return source,day,fetch_official(root,source,day,refresh=day==as_of),None
@@ -302,12 +303,14 @@ def refresh(root, as_of, history_days=18):
     statuses=[]
     for source in ['shfe-daily','shfe-weekly','czce','gfex']:
         rs=[r for r in results if r[0]==source];good=[r[1] for r in rs if r[2]];errors=[{'date':r[1],'error':r[3]} for r in rs if r[3]]
-        statuses.append({'source':source,'status':'ok' if good and not errors else 'partial' if good else 'failed','latest':max(good) if good else None,'errors':errors[:6]})
+        statuses.append({'source':source,'status':'disabled' if provider!='exchanges' else 'ok' if good and not errors else 'partial' if good else 'failed','latest':max(good) if good else None,'errors':errors[:6]})
     # DCE public endpoint may return an access challenge; record it, never execute it.
     try:
+        if provider != 'exchanges':
+            raise ValueError('Direct exchange collection disabled; Eastmoney is selected.')
         r=requests.post('http://www.dce.com.cn/dcereport/publicweb/dailystat/wbillWeeklyQuotes',json={'tradeDate':as_of.replace('-',''),'varietyId':'all'},timeout=15)
         statuses.append({'source':'dce-official','status':'unavailable','error':f'HTTP {r.status_code}; 官方字段尚未完成日期/单位验证，使用独立备用系列。'})
-    except requests.RequestException as e:statuses.append({'source':'dce-official','status':'failed','error':type(e).__name__})
+    except (requests.RequestException, ValueError) as e:statuses.append({'source':'dce-official','status':'disabled' if provider!='exchanges' else 'failed','error':str(e)[:160]})
     markets=json.loads((root/'dist/data.json').read_text(encoding='utf-8'))['markets']
     covered={s['code'] for s in incoming if s['metric']=='receipt' and s['history'][-1]['date']==as_of}
     fallback=[m for m in markets if m['code'] in CODES and m['code'] not in covered]
@@ -318,8 +321,17 @@ def refresh(root, as_of, history_days=18):
         for code,ss,error in pool.map(backup,fallback):
             incoming.extend(ss);statuses.append({'source':'em-'+code,'status':'failed' if error else 'ok','error':error})
     merged=merge_series(old.get('inventories',[]),incoming,as_of)
-    from source_supply import refresh_supplies
-    supplies,supply_status=refresh_supplies(root,as_of,old.get('supplies',[]))
+    if provider=='eastmoney':
+        for series in merged:
+            if series.get('provider')=='东方财富备用':
+                series['collectionRole']='primary'
+                series['note']='东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。'
+    if provider=='exchanges':
+        from source_supply import refresh_supplies
+        supplies,supply_status=refresh_supplies(root,as_of,old.get('supplies',[]))
+    else:
+        supplies=old.get('supplies',[])
+        supply_status=[{'source':'supply','status':'not-refreshed','error':'东方财富公开接口尚未验证对应产量/供需字段；保留原统计期历史，不再调用其他网站。'}]
     packet={'schema':'fundamentals-v1','asOf':as_of,'checkedAt':dt.datetime.now(SHANGHAI).isoformat(timespec='seconds'),
             'inventories':merged,'supplies':supplies,'statuses':statuses+supply_status}
     from check_live_fundamentals import validate
@@ -336,7 +348,7 @@ def refresh(root, as_of, history_days=18):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--as-of');p.add_argument('--history-days',type=int,default=18);a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--as-of');p.add_argument('--history-days',type=int,default=18);p.add_argument('--provider',choices=['eastmoney','exchanges'],default='eastmoney');a=p.parse_args()
     day=a.as_of or json.loads((ROOT/'dist/data.json').read_text(encoding='utf-8'))['asOf']
     if valid_day(day)>dt.datetime.now(SHANGHAI).date().isoformat():raise ValueError('future target')
-    refresh(ROOT,day,a.history_days)
+    refresh(ROOT,day,a.history_days,a.provider)

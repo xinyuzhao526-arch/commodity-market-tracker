@@ -172,7 +172,8 @@ def refresh(root, day, start, *, rebuild=False, preflight=official_report_availa
             (root / 'data').mkdir(exist_ok=True)
             for packet in stage.glob('data/*-markets.json'):
                 shutil.copy2(packet, root / 'data' / packet.name)
-            shutil.copy2(stage / 'data/shfe-base.json', root / 'data/shfe-base.json')
+            if (stage / 'data/shfe-base.json').exists():
+                shutil.copy2(stage / 'data/shfe-base.json', root / 'data/shfe-base.json')
             # Single atomic data promotion is the commit point. GitHub only pushes after success.
             incoming = published.with_suffix('.incoming')
             shutil.copy2(stage / 'dist/data.json', incoming)
@@ -202,6 +203,8 @@ def main():
     parser.add_argument('--as-of', help='Optional YYYY-MM-DD; defaults to the latest closed weekday in Shanghai.')
     parser.add_argument('--start', help='Optional history window start; defaults to 120 calendar days before target.')
     parser.add_argument('--rebuild', action='store_true', help='Revalidate the same published day; never permits rollback.')
+    parser.add_argument('--provider', choices=['eastmoney', 'exchanges'], default='eastmoney',
+                        help='Default: Eastmoney public fixed-contract data. Legacy sources are opt-in.')
     args = parser.parse_args()
     now = dt.datetime.now(SHANGHAI)
     day = target_day(now, args.as_of)
@@ -209,7 +212,11 @@ def main():
     if start > day - dt.timedelta(days=30):
         raise ValueError('History window must cover at least 30 calendar days.')
     try:
-        report(refresh(ROOT, day.isoformat(), start.isoformat(), rebuild=args.rebuild))
+        options = {}
+        if args.provider == 'eastmoney':
+            from source_eastmoney import build
+            options = {'preflight': lambda *_: True, 'builder': build}
+        report(refresh(ROOT, day.isoformat(), start.isoformat(), rebuild=args.rebuild, **options))
     except Exception as exc:
         report({'status': 'failed', 'changed': False, 'error': str(exc),
                 'asOf': json.loads((ROOT / 'dist/data.json').read_text(encoding='utf-8'))['asOf']})
