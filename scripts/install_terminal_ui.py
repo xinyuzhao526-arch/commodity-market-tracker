@@ -35,4 +35,7 @@ version=hashlib.sha256(p.read_bytes()).hexdigest()[:12]
 html=index.read_text(encoding='utf-8')
 html,count=re.subn(r'src="app\.js(?:\?[^"<>]*)?"', 'src="app.js?v='+version+'"',html)
 assert count==1, 'Expected one application script tag.'
+style_version=hashlib.sha256((ROOT/'dist/style.css').read_bytes()).hexdigest()[:12]
+html,count=re.subn(r'href="style\.css(?:\?[^"<>]*)?"', 'href="style.css?v='+style_version+'"',html)
+assert count==1, 'Expected one stylesheet link.'
 index.write_text(html,encoding='utf-8')

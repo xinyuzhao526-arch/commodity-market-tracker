@@ -17,7 +17,7 @@ js = js.replace('当前为手动生成并发布的数据快照，尚未配置无
 data = json.loads((ROOT / 'dist/data.json').read_text(encoding='utf-8'))
 assert data['schema'] == 'domestic-v1'
 payload = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c').replace('&', '\\u0026')
-html = html.replace('<link rel="stylesheet" href="style.css">', '<style>' + css + '</style>')
+html = re.sub(r'<link rel="stylesheet" href="style\.css(?:\?[^"<>]*)?">', lambda match: '<style>' + css + '</style>', html)
 html = re.sub(r'<a[^>]*class="offline-download"[^>]*>.*?</a>', '', html)
 html = re.sub(r'<script type="module" src="app\.js(?:\?[^"<>]*)?"></script>', lambda match: '<script id="embedded-data" type="application/json">' + payload + '</script><script>' + js.replace('</script', '<\\/script') + '</script>', html)
 assert 'fetch(' not in html and '@import' not in html
