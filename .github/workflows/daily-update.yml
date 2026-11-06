@@ -53,6 +53,7 @@ jobs:
           python scripts/check_continuous.py
           node scripts/check_scatter.cjs
           node scripts/check_deviation_ui.cjs
+          node scripts/check_market_states.cjs
           node scripts/check_historical_research.cjs
           node scripts/check_domestic_research.cjs
           node scripts/check_research_quality.cjs

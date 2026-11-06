@@ -37,7 +37,7 @@ researchTable=function(){
   const h=HISTORICAL_RESEARCH.products?.[row.dataset.researchRow];
   row.insertAdjacentHTML('beforeend',`<td class="historical-cell">${historicalPercentile(h?.volatilityPercentile)}</td><td class="historical-cell">${historicalPercentile(h?.absDeviationPercentile)}</td><td class="historical-cell" title="${esc(historicalSampleNote(h))}">${h?.currentSegmentSamples??'—'}<small class="metric-note">${Number.isFinite(h?.volatilityPercentile)?'可计算分位':'样本不足'}</small></td>`);
  });
- const empty=document.querySelector('#research-body .empty');if(empty)empty.colSpan=13;
+ const empty=document.querySelector('#research-body .empty');if(empty)empty.colSpan=14;
 };
 const historicalHomeBase=productResearchHome;
 productResearchHome=function(){historicalHomeBase();const host=document.querySelector('.product-research-home');if(!host||host.querySelector('.historical-notice'))return;const n=DATA.markets.filter(m=>Number.isFinite(historicalProduct(m)?.volatilityPercentile)).length;host.insertAdjacentHTML('beforeend',`<p class="historical-notice">新增历史研究 · 截至 ${esc(historicalDate())} · ${n}/${DATA.markets.length} 个品种满足历史分位门槛。研究矩阵末三列与品种详情可查看；历史日期与当前行情 ${esc(DATA.asOf)} 分开标注。</p>`)};

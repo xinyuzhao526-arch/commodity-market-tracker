@@ -252,6 +252,41 @@ def continuous_research(m,calendar,fixed):
     if not ready:a['flags'].append('后复权连续序列未覆盖当前行情日')
     return a
 
+def describe_market_state(a, fixed):
+    """Describe price facts separately from seat checks and unavailable data."""
+    td = a.get('trendDirection')
+    daily = fixed.get('return1')
+    p = sign(daily) if finite(daily) else None
+    trend = {1: '均线偏多', -1: '均线偏空', 0: '均线分化'}.get(td, '趋势样本不足')
+    if td not in (-1, 0, 1):
+        phase = '趋势样本不足'
+    elif p is None:
+        phase = '当日涨跌缺失'
+    elif p == 0:
+        phase = '当日持平'
+    elif td == -1:
+        phase = '偏空中的反弹' if p > 0 else '偏空同向下行'
+    elif td == 1:
+        phase = '偏多同向上涨' if p > 0 else '偏多中的回落'
+    else:
+        phase = '均线分化·当日上涨' if p > 0 else '均线分化·当日下跌'
+    oi = fixed.get('fixedOiChange')
+    position = '持仓变化缺失' if not finite(oi) else '当日增仓' if oi > 0 else '当日减仓' if oi < 0 else '持仓持平'
+    checks = []
+    if a.get('seatTrendConflict'): checks.append('席位样本差与均线反向')
+    if a.get('seatMarginalConflict'): checks.append('席位存量差与增减项差反向')
+    if (a.get('liquidity') or {}).get('low'): checks.append('低流动性')
+    missing = []
+    if td is None: missing.append('连续均线样本不足')
+    if p is None: missing.append('真实合约昨收涨跌缺失')
+    if not finite(oi): missing.append('真实合约持仓变化缺失')
+    if not finite(a.get('seatDifference')): missing.append('席位样本缺失')
+    elif not finite(a.get('seatDeltaDifference')): missing.append('席位增减项缺失')
+    return {'version': 'market-state-v1', 'trend': trend, 'phase': phase,
+            'dailyReturn': daily, 'position': position, 'checks': checks,
+            'missing': missing, 'strictAlignment': a.get('status') == '多维同向'}
+
+
 def analyze(data):
     calendar=sorted({h['date'] for m in data['markets'] if m['exchange'] in ('SHFE','INE') for h in m['history'] if h['date']<=data['asOf']})
     for m in data['markets']:
@@ -260,6 +295,7 @@ def analyze(data):
             m['fixedAnalysis']=fixed
             m['analysis']=continuous_research(m,calendar,fixed)
         else:m['analysis']=fixed
+        m['analysis']['marketState']=describe_market_state(m['analysis'],fixed)
     eligible=[m['analysis']['return20'] for m in data['markets'] if finite(m['analysis']['return20'])]
     vol=[m['analysis']['volatility20'] for m in data['markets'] if finite(m['analysis']['volatility20'])]
     for m in data['markets']:
