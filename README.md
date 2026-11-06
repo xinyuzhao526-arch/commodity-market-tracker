@@ -2,6 +2,10 @@
 
 2026-11-06：本地默认采集已切换为东方财富公开逐合约日线、会员排名及仓单接口；详见[东方财富接入说明](东方财富接入说明.md)。不需要网站密码，不等于已取得 Choice API 权限。未验证的产量/供需数据保留旧统计期，默认停止调用其他站点。下文历史方法说明及在线页面不代表本次改动已发布。
 
+历史研究：新增的历史分位和偏离事件分布来自用户提供的商品日线，统计截至 **2026-10-30**，作为独立历史研究版本保存于 `dist/historical-research.json`。研究矩阵列标题及品种详情均单独标注日期，不与当前行情拼接，不重置网站已发布的连续价基准。25/34个展示品种满足本轮历史分位门槛；其他品种显示样本不足。合约集中度和活跃远月结算价差则使用当前行情日已取得的合约样本。原始Parquet和逐事件明细没有上传；网站仅包含品种级汇总。
+
+更新历史汇总时，先在本地重跑并验证探索分析，再执行 `python scripts/build_historical_research.py <研究输出目录>`，随后执行 `install_terminal_ui.py` 与 `export_html.py`。每日行情更新不会自动延长这份历史统计。`node scripts/check_historical_research.cjs` 检查日期隔离、缺失值与同日合约口径，已加入发布检查。
+
 [在线网页](https://xinyuzhao526-arch.github.io/commodity-market-tracker/) · [下载离线 HTML](https://xinyuzhao526-arch.github.io/commodity-market-tracker/market-tracker.html) · [自动更新记录](https://github.com/xinyuzhao526-arch/commodity-market-tracker/actions)
 
 这是一个以国内商品为主线的盘后研究工作台。它把行情、均线、量仓、席位、偏离过程及已取得的产业资料组织成可核查的研究线索，并同时保留反向证据和缺失项。

@@ -15,6 +15,10 @@ domestic+='\nconst LIVE_FUNDAMENTALS='+live_payload+';\n'+(ROOT/'scripts/live_fu
 domestic+='\n'+(ROOT/'scripts/trend_context_ui.js').read_text(encoding='utf-8')
 domestic+='\n'+(ROOT/'scripts/research_quality_ui.js').read_text(encoding='utf-8')
 domestic+='\n'+(ROOT/'scripts/continuous_ui.js').read_text(encoding='utf-8')
+history_path=ROOT/'dist/historical-research.json'
+history=json.loads(history_path.read_text(encoding='utf-8')) if history_path.exists() else {'products':{},'events':[]}
+history_payload=json.dumps(history,ensure_ascii=False,separators=(',',':'),allow_nan=False).replace('<','\\u003c').replace('&','\\u0026')
+domestic+='\nconst HISTORICAL_RESEARCH='+history_payload+';\n'+(ROOT/'scripts/historical_research_ui.js').read_text(encoding='utf-8')
 ui=ui.replace('// END TERMINAL UI',domestic+'\n// END TERMINAL UI')
 if '// BEGIN TERMINAL UI' in s:
  a=s.index('// BEGIN TERMINAL UI');b=s.index('// END TERMINAL UI',a)+len('// END TERMINAL UI');s=s[:a]+ui+s[b:]
