@@ -15,6 +15,8 @@ import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 LIST = 'https://push2.eastmoney.com/api/qt/clist/get'
+LIST_ENDPOINTS = (LIST, 'https://82.push2.eastmoney.com/api/qt/clist/get',
+                  'https://push2delay.eastmoney.com/api/qt/clist/get')
 KLINE = 'https://push2his.eastmoney.com/api/qt/stock/kline/get'
 PAGE = 'https://quote.eastmoney.com/center/gridlist.html#futures_qh'
 VENUES = {113: {'SHFE'}, 114: {'DCE'}, 115: {'CZCE'}, 142: {'INE'}, 225: {'GFEX'}}
@@ -39,11 +41,23 @@ def get_json(url, params):
 
 
 def listings():
+    # Restart pagination on another Eastmoney host after transport failure.
+    # Never splice pages from different hosts or reuse a stale contract list.
+    for index, endpoint in enumerate(LIST_ENDPOINTS):
+        try:
+            return _listings(endpoint)
+        except requests.RequestException:
+            if index == len(LIST_ENDPOINTS) - 1:
+                raise
+            print('Eastmoney contract-list endpoint unavailable; restarting on backup host.', flush=True)
+
+
+def _listings(endpoint):
     result = {}
     total = None
     page = 1
     while total is None or len(result) < total:
-        doc = get_json(LIST, {'pn': page, 'pz': 100,
+        doc = get_json(endpoint, {'pn': page, 'pz': 100,
                              'fs': 'm:113,m:114,m:115,m:142,m:225',
                              'fields': 'f12,f13,f14', 'fltt': 2, 'np': 1})
         data = doc.get('data') or {}

@@ -70,6 +70,26 @@ class EastmoneyTests(unittest.TestCase):
         self.assertEqual(result[0]['turnover'], 10)
         self.assertEqual(result[0]['provider'], 'previous-validated-source')
 
+    def test_transport_failure_restarts_all_pages_on_backup(self):
+        first = {'data': {'total': 2, 'diff': [{'f12': 'cu2612', 'f13': 113}]}}
+        complete = {'data': {'total': 1, 'diff': [{'f12': 'al2612', 'f13': 113}]}}
+        with patch.object(em, 'get_json', side_effect=[first, em.requests.HTTPError('502'), complete]) as get:
+            result = em.listings()
+        self.assertEqual(set(result), {'113.al2612'})
+        self.assertEqual([(c.args[0], c.args[1]['pn']) for c in get.call_args_list],
+                         [(em.LIST_ENDPOINTS[0], 1), (em.LIST_ENDPOINTS[0], 2), (em.LIST_ENDPOINTS[1], 1)])
+
+    def test_all_hosts_failing_remains_a_failure(self):
+        with patch.object(em, 'get_json', side_effect=em.requests.HTTPError('502')) as get:
+            with self.assertRaises(em.requests.HTTPError): em.listings()
+        self.assertEqual(get.call_count, len(em.LIST_ENDPOINTS))
+
+    def test_invalid_pagination_is_not_hidden_by_failover(self):
+        first = {'data': {'total': 1, 'diff': []}}
+        with patch.object(em, 'get_json', return_value=first) as get:
+            with self.assertRaisesRegex(ValueError, 'Missing'): em.listings()
+        self.assertEqual(get.call_count, 1)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -13,6 +13,7 @@ import tempfile
 import time
 import urllib.error
 import urllib.request
+import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 SHANGHAI = dt.timezone(dt.timedelta(hours=8))
@@ -185,6 +186,20 @@ def refresh(root, day, start, *, rebuild=False, preflight=official_report_availa
     return {'status': 'updated', 'asOf': day, 'changed': True, 'byExchange': counts}
 
 
+def refresh_with_retries(root, day, start, *, attempts=3, **options):
+    """Retry transport failures, retaining the same target day and atomic guard."""
+    for attempt in range(attempts):
+        try:
+            return refresh(root, day, start, **options)
+        except requests.RequestException:
+            if attempt + 1 == attempts:
+                raise
+            delay = 30 * (3 ** attempt)
+            print(f'Transient data-source request failure; retrying in {delay}s '
+                  f'({attempt + 2}/{attempts}), target {day}.', flush=True)
+            time.sleep(delay)
+
+
 def report(result):
     print(json.dumps(result, ensure_ascii=False), flush=True)
     (ROOT / '.refresh-status.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
@@ -216,7 +231,7 @@ def main():
         if args.provider == 'eastmoney':
             from source_eastmoney import build
             options = {'preflight': lambda *_: True, 'builder': build}
-        report(refresh(ROOT, day.isoformat(), start.isoformat(), rebuild=args.rebuild, **options))
+        report(refresh_with_retries(ROOT, day.isoformat(), start.isoformat(), rebuild=args.rebuild, **options))
     except Exception as exc:
         report({'status': 'failed', 'changed': False, 'error': str(exc),
                 'asOf': json.loads((ROOT / 'dist/data.json').read_text(encoding='utf-8'))['asOf']})

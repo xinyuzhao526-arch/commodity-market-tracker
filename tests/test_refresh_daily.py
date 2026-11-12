@@ -14,6 +14,32 @@ daily = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(daily)
 
 
+class TransportRetryTests(unittest.TestCase):
+    def test_transport_retry_preserves_target_and_options(self):
+        result = {'status': 'updated', 'changed': True}
+        with patch.object(daily, 'refresh', side_effect=[daily.requests.HTTPError('502'), result]) as refresh, \
+             patch.object(daily.time, 'sleep') as sleep:
+            self.assertEqual(daily.refresh_with_retries(Path('test'), '2026-11-11', '2026-07-14', rebuild=True), result)
+        self.assertEqual(refresh.call_args_list[0], refresh.call_args_list[1])
+        sleep.assert_called_once_with(30)
+
+    def test_exhausted_retries_still_fail(self):
+        with patch.object(daily, 'refresh', side_effect=daily.requests.Timeout('timeout')) as refresh, \
+             patch.object(daily.time, 'sleep') as sleep:
+            with self.assertRaises(daily.requests.Timeout):
+                daily.refresh_with_retries(Path('test'), '2026-11-11', '2026-07-14')
+        self.assertEqual(refresh.call_count, 3)
+        self.assertEqual([c.args[0] for c in sleep.call_args_list], [30, 90])
+
+    def test_validation_failure_is_not_retried(self):
+        with patch.object(daily, 'refresh', side_effect=ValueError('mixed dates')) as refresh, \
+             patch.object(daily.time, 'sleep') as sleep:
+            with self.assertRaisesRegex(ValueError, 'mixed dates'):
+                daily.refresh_with_retries(Path('test'), '2026-11-11', '2026-07-14')
+        self.assertEqual(refresh.call_count, 1)
+        sleep.assert_not_called()
+
+
 def snapshot(day='2026-10-23'):
     markets = []
     for ex in sorted(daily.EXCHANGES):
