@@ -385,6 +385,63 @@ researchDetail=function(){let html=liveDetailBase();const m=selected();if(liveSu
 const liveHomeBase=productResearchHome;
 productResearchHome=function(){liveHomeBase();const host=$('.product-research-home');if(!host)return;const covered=DATA.markets.filter(m=>liveInventory(m).length).length,supply=DATA.markets.filter(m=>liveSupply(m).length).length;host.insertAdjacentHTML('afterbegin',`<div class="live-coverage"><strong>实物序列 ${covered} / ${DATA.markets.length} 品种（${DATA.markets.filter(m=>liveInventory(m).some(s=>s.history.at(-1).date===LIVE_FUNDAMENTALS.asOf)).length} 个有目标日数据） · 国内统计 ${supply} / ${DATA.markets.length} 品种</strong><span>目标 ${LIVE_FUNDAMENTALS.asOf} · 东方财富更新；既有官方历史保留原来源和日期，覆盖不代表完整供需平衡表。</span></div>`);const foot=host.querySelector('.chart-note');if(foot)foot.textContent=`盘面 ${DATA.asOf}；东方财富仓单随每日任务检查，未接入的库存和国内统计保留原统计期。人工研究资料保留原日期；相对强度仍以原始全市场样本计算。`;host.querySelectorAll('[data-product]').forEach(b=>{const m=DATA.markets.find(m=>m.code===b.dataset.product),label=b.querySelector('.product-research-state');if(label)label.textContent=`供需 ${liveSupply(m).length?'有统计':'资料线索'} · 库存 ${liveInventory(m).length?'有序列':'未取得'}`});};
 
+// Keep incomplete contract coverage separate from confirmed all-contract totals.
+function sampleContractRows(m){
+ const rows=(m.contracts||[]).filter(r=>r.date===DATA.asOf);
+ return !rows.length||rows.some(r=>typeof r.contract!=='string'||!r.contract)||new Set(rows.map(r=>r.contract.toLowerCase())).size!==rows.length?null:rows;
+}
+function marketSampleMetric(m,field){
+ const rows=sampleContractRows(m);
+ if(!rows||rows.some(r=>!Number.isFinite(r[field])||(field!=='oiChange'&&r[field]<0)))return null;
+ return {value:rows.reduce((sum,r)=>sum+r[field],0),count:rows.length};
+}
+function openInterestObservation(m,basis='sample'){
+ if(basis==='all')return m.aggregateScope==='all-contracts'&&m.main?.date===DATA.asOf&&Number.isFinite(m.totalOiChange)?{market:m,value:m.totalOiChange,count:null}:null;
+ const metric=marketSampleMetric(m,'oiChange');
+ return metric?{market:m,...metric}:null;
+}
+rankPanel=function(){return `<section class="panel"><div class="panel-top"><div><div class="panel-title">增减仓观察</div><div class="panel-kicker">OPEN INTEREST / 跨品种排行 · ${DATA.asOf}</div></div><div class="tabs"><button class="chip ${state.rankMode==='increase'?'active':''}" data-rank="increase">增仓</button><button class="chip ${state.rankMode==='decrease'?'active':''}" data-rank="decrease">减仓</button></div></div><div class="filters" role="group" aria-label="增减仓统计口径"><button class="filter-btn" data-oi-basis="sample">已取得合约样本</button><button class="filter-btn" data-oi-basis="all">全合约合计</button></div><div class="chart-note" id="oi-coverage"></div><div class="ranking" id="ranking"></div><div class="chart-note">单位：手。已取得合约样本不代表交易所全合约；两个口径分别排行。<br>持仓增减不等同方向性资金流。本栏比较当前覆盖品种，不随单个合约选择变化。</div></section>`};
+ranking=function(){
+ const basis=state.rankBasis||'sample',eligible=DATA.markets.map(m=>openInterestObservation(m,basis)).filter(Boolean);
+ const rows=eligible.filter(r=>state.rankMode==='increase'?r.value>0:r.value<0).sort((a,b)=>state.rankMode==='increase'?b.value-a.value:a.value-b.value).slice(0,6);
+ const max=Math.max(...rows.map(r=>Math.abs(r.value)),1),scope=basis==='all'?'全合约合计':'已取得合约样本';
+ $('#oi-coverage').textContent=`${scope} · 可计算 ${eligible.length} / ${DATA.markets.length} 个品种；缺失或重复合约不补零。`;
+ $('#ranking').innerHTML=rows.length?rows.map((r,i)=>{const m=r.market;return `<button class="rank-row" data-select="${esc(m.code)}" title="${scope}${r.count==null?'':' · '+r.count+' 个同日合约'}"><span class="rank-number">0${i+1}</span><span class="rank-name">${esc(m.name)}${r.count==null?'':`<small class="metric-note">${r.count} 个合约</small>`}</span><span class="rank-track"><span style="width:${Math.abs(r.value)/max*100}%;background:${r.value>0?'#c78b77':'#8ea68b'}"></span></span><span class="rank-val ${color(r.value)}">${r.value>0?'+':''}${compact(r.value)}</span></button>`}).join(''):`<p class="empty">${!eligible.length?(basis==='all'?'本次未取得可核实的全合约持仓变化；可切换“已取得合约样本”查看。':'本次缺少可计算的同日合约持仓变化。'):`可计算的 ${eligible.length} 个品种中，暂无${state.rankMode==='increase'?'增仓':'减仓'}样本。`}</p>`;
+ $$('[data-oi-basis]').forEach(b=>{const active=b.dataset.oiBasis===basis;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));b.onclick=()=>{state.rankBasis=b.dataset.oiBasis;ranking()}});
+ bindSelection($('#ranking'));
+};
+
+// Market overview uses explicitly dated available-contract samples.
+function overviewExportRows(){
+ const heads=['数据日期','品种','交易所','代表合约','计价单位','收盘价','结算价','昨结算价','涨跌幅%','样本成交量_手','样本持仓量_手','样本持仓变化_手','趋势标签','日行情来源','量仓合计口径','成交量合约数','持仓量合约数','增减仓合约数','合约选择规则'];
+ const rows=DATA.markets.map(m=>{const volume=marketSampleMetric(m,'volume'),oi=marketSampleMetric(m,'oi'),change=marketSampleMetric(m,'oiChange');return [m.main.date,m.name,m.exchange,m.main.contract,m.unit,m.main.close,m.main.settle,m.main.prevSettle,m.main.changePct,volume?.value??null,oi?.value??null,change?.value??null,trend(m).name,sourceOf(m).url,'同日已取得合约样本（非全合约）',volume?.count??null,oi?.count??null,change?.count??null,m.mainSelection||'见来源说明']});
+ return [heads,...rows];
+}
+exportCsv=function(){
+ const csv='\ufeff'+overviewExportRows().map(row=>row.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\r\n');
+ const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),link=document.createElement('a');
+ link.href=url;link.download=`商品研究终端_境内商品_${DATA.asOf}.csv`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('已导出同日合约样本量仓、合约数和来源');
+};
+overview=function(){
+ const ms=DATA.markets,up=ms.filter(m=>m.main.changePct>0).length,down=ms.filter(m=>m.main.changePct<0).length;
+ const sorted=ms.filter(m=>m.main.changePct!=null).sort((a,b)=>b.main.changePct-a.main.changePct),leader=sorted[0],laggard=sorted.at(-1);
+ const volumeRows=ms.map(m=>marketSampleMetric(m,'volume')).filter(Boolean),oiRows=ms.map(m=>marketSampleMetric(m,'oiChange')).filter(Boolean),volume=volumeRows.length?volumeRows.reduce((sum,r)=>sum+r.value,0):null,oiChange=oiRows.length?oiRows.reduce((sum,r)=>sum+r.value,0):null;
+ return heading('看见价格，也看见结构。','从趋势、成交与席位出发，跟踪境内商品市场的每日变化。','MARKET OBSERVATORY / 市场概览')+
+ `<div class="brief"><div class="brief-label">DAILY BRIEF<strong>今日观察</strong></div><div class="brief-text"><h2>${esc(leader.name)}领涨，${esc(laggard.name)}承压。</h2><p>覆盖样本 ${up} 个品种上涨、${down} 个下跌。${esc(leader.name)} ${signed(leader.main.changePct,2)}%，${esc(laggard.name)} ${signed(laggard.main.changePct,2)}%；可核实昨结算价的品种参与涨跌比较。</p></div><a href="#trends" class="brief-arrow" aria-label="查看趋势全景">↗</a></div>`+
+ `<div class="stats-grid">${stat('覆盖商品',ms.length,'个',`${DATA.coverage.exchanges.length} 家交易所 / 机构 · 已取得样本`,'⊞')}${stat('涨跌广度',`<span class="up">${up}</span><span style="font-size:18px;color:#c0c6b6"> / </span><span class="down">${down}</span>`,'涨 / 跌',`另有 ${ms.length-up-down} 个平盘或无涨跌样本`,'↔')}${stat('样本成交量',volume==null?'—':compact(volume),'手',`${volumeRows.length} 个品种 · 已取得合约样本 · 非全合约`,'▥')}${stat('样本持仓量变化',`<span class="${color(oiChange)}">${oiChange==null?'—':(oiChange>0?'+':'')+compact(oiChange)}</span>`,'手',`${oiRows.length} 个品种 · 已取得合约样本 · 非全合约`,'⇄')}</div>`+
+ `<div class="section-header"><h2 class="section-title">重点品种<span class="section-sub">合约选择规则见各品种来源</span></h2><a class="text-link" href="#trends">查看全部品种 ↗</a></div><div class="mini-cards">${['au','cu','rb','sc','m','ta','lc','si'].map(code=>ms.find(m=>m.code===code)).filter(Boolean).map(m=>`<button class="mini ${state.selected===m.code?'selected':''}" data-select="${m.code}"><div class="mini-head"><span class="mini-title">${m.name}</span><span class="mini-code">${m.main.contract.toUpperCase()} · ${m.exchange}</span></div><div class="mini-value">${num(m.main.close,decimals(m))}</div>${spark(m,'spark')}<div class="mini-foot"><span class="${color(m.main.changePct)}">${signed(m.main.changePct,2)}%</span><small>${m.unit}</small></div></button>`).join('')}</div>`+
+ `<div class="main-grid" id="detail">${chartPanel()}${rankPanel()}</div>`+
+ `<div class="section-header"><h2 class="section-title">商品全景<span class="section-sub">价格、趋势与持仓变化</span></h2><span class="text-link">${DATA.asOf}</span></div>${tableShell()}<div class="info-strip">覆盖 ${exLabel()} 的已取得样本。代表合约为当日有成交且持仓量最大的合约；价格图固定跟踪该合约，不拼接主力连续价格。更多口径见 <a href="#sources">数据与方法 ↗</a></div>`;
+}
+;
+tableShell=function(){return `<div class="table-toolbar"><div class="filters">${['全部',...new Set(DATA.markets.map(m=>m.sector)),'自选'].map(s=>`<button class="filter-btn ${state.sector===s?'active':''}" data-sector="${s}">${s}</button>`).join('')}</div><select id="exchange-filter" class="select" aria-label="筛选交易所"><option value="全部">全部交易所</option>${DATA.coverage.exchanges.map(ex=>`<option value="${ex}" ${state.exchange===ex?'selected':''}>${exchangeNames[ex]||ex}</option>`).join('')}</select><label class="search"><span>⌕</span><input id="search" type="search" placeholder="搜索品种 / 合约" value="${esc(state.search)}" aria-label="搜索品种或合约"></label></div><div class="panel"><div class="table-wrap"><table class="market-table"><thead><tr><th>品种 / 合约</th><th>板块</th><th>收盘价</th><th><button data-sort="changePct">日涨跌幅 ↕</button></th><th>近 24 样本</th><th><button data-sort="volume">样本成交量 / 手 ↕</button></th><th><button data-sort="oiChange">样本增减仓 / 手 ↕</button></th><th>趋势状态</th><th>持仓排名</th></tr></thead><tbody id="market-body"></tbody></table></div><div class="table-bottom"><span id="table-count"></span><span>量仓为同日已取得合约样本合计，非全合约；各列独立核验，缺失留空。红涨绿跌 · 点击品种查看详情</span></div></div>`}
+;
+table=function(){let a=DATA.markets.filter(m=>(state.exchange==='全部'||m.exchange===state.exchange)&&(state.sector==='全部'||(state.sector==='自选'?state.favorites.includes(m.code):m.sector===state.sector))&&(`${m.name} ${m.code} ${m.main.contract}`.toLowerCase().includes(state.search.toLowerCase())));a.sort((a,b)=>{const value=m=>state.sort==='oiChange'?marketSampleMetric(m,'oiChange')?.value:state.sort==='volume'?marketSampleMetric(m,'volume')?.value:m.main.changePct;const x=value(a),y=value(b);return x==null?(y==null?0:1):y==null?-1:(x-y)*state.order});$('#market-body').innerHTML=a.length?a.map(m=>{const t=trend(m),volume=marketSampleMetric(m,'volume'),oi=marketSampleMetric(m,'oiChange');return `<tr class="${m.code===state.selected?'chosen':''}" data-row="${m.code}" tabindex="0" aria-label="查看${m.name}详情"><td><button class="star ${state.favorites.includes(m.code)?'saved':''}" data-star="${m.code}" aria-label="${state.favorites.includes(m.code)?'移除':'添加'}自选${m.name}">${state.favorites.includes(m.code)?'★':'☆'}</button><span class="market-name">${m.name}<small style="margin-left:25px">${m.main.contract.toUpperCase()} · ${m.exchange}</small></span></td><td><span class="badge">${m.sector}</span></td><td>${num(m.main.close,decimals(m))}</td><td class="${color(m.main.changePct)}">${signed(m.main.changePct,2)}%</td><td>${spark(m)}</td><td>${num(volume?.value??null)}<small class="metric-note">${volume?volume.count+' 个同日合约 · 样本合计':'同日样本缺失或无效'}</small></td><td class="${color(oi?.value)}">${signed(oi?.value??null)}<small class="metric-note">${oi?oi.count+' 个同日合约 · 样本合计':'同日样本缺失或无效'}</small></td><td><span class="badge ${t.class}">${t.name}</span></td><td>${m.ranks.length?'<button class="chip text-link" data-position="'+m.code+'">查看 ↗</button>':'<span class="neutral">未取得</span>'}</td></tr>`}).join(''):'<tr><td colspan="9" class="empty">没有匹配品种。试试其他关键词，或点击星标添加自选。</td></tr>';$('#table-count').textContent=`显示 ${a.length} / ${DATA.markets.length} 个品种 · 数据日期 ${DATA.asOf}`;
+ $$('[data-row]').forEach(el=>{const action=()=>{state.selected=el.dataset.row;if(state.view==='trends'){location.hash='positions'}else{render();$('#detail')?.scrollIntoView({behavior:'smooth',block:'center'})}};el.onclick=e=>{if(!e.target.closest('[data-star],[data-position]'))action()};el.onkeydown=e=>{if(e.target!==el)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();action()}}});
+ $$('[data-position]').forEach(b=>b.onclick=e=>{e.stopPropagation();state.selected=b.dataset.position;location.hash='positions'});
+ $$('[data-star]').forEach(b=>b.onclick=e=>{e.stopPropagation();const c=b.dataset.star;state.favorites=state.favorites.includes(c)?state.favorites.filter(x=>x!==c):[...state.favorites,c];try{localStorage.setItem('guanlan-favorites',JSON.stringify(state.favorites))}catch{}table()})}
+;
+
 // Describe the moving-average state, daily price action and distance separately.
 // A rebound is an observed close-to-close move, not a trend reversal forecast.
 function trendContextMarkup(m){
@@ -405,24 +462,6 @@ const trendContextShellBase=tableShell;
 tableShell=function(){return trendContextShellBase().replace('<th>趋势状态</th>','<th>均线 / 短线观察</th>').replace('红涨绿跌 · 点击品种查看价格与席位结构','日涨跌幅较昨结；短线观察较昨收 · 点击品种查看详情')};
 const trendContextViewBase=trends;
 trends=function(){return trendContextViewBase().replace("趋势偏多","均线偏多").replace("趋势偏空","均线偏空").replace('这里的趋势标签是本站透明规则的计算结果：使用当前代表合约的历史收盘价，短周期 MA5、中周期 MA20。它并非实际 CTA 基金仓位，也不是参考站的专有模型。','均线与偏离使用固定基准比例后复权连续价；报价列仍为真实代表合约。均线状态描述后复权收盘、MA5与MA20的位置；短线观察独立显示当日反弹或回落。偏离MA20达到2 ATR时另列反弹或回调观察，尚未达到门槛也会显示实际偏离。反弹不等于趋势反转，均线偏空也不代表排除反弹。表格日涨跌幅采用昨结算价，短线观察采用连续研究对应合约的昨收盘价，两个基准分别展示。')};
-
-// Keep incomplete contract coverage separate from confirmed all-contract totals.
-function openInterestObservation(m,basis='sample'){
- if(basis==='all')return m.aggregateScope==='all-contracts'&&m.main?.date===DATA.asOf&&Number.isFinite(m.totalOiChange)?{market:m,value:m.totalOiChange,count:null}:null;
- const rows=(m.contracts||[]).filter(r=>r.date===DATA.asOf);
- if(!rows.length||rows.some(r=>!r.contract||!Number.isFinite(r.oiChange))||new Set(rows.map(r=>r.contract.toLowerCase())).size!==rows.length)return null;
- return {market:m,value:rows.reduce((sum,r)=>sum+r.oiChange,0),count:rows.length};
-}
-rankPanel=function(){return `<section class="panel"><div class="panel-top"><div><div class="panel-title">增减仓观察</div><div class="panel-kicker">OPEN INTEREST / 跨品种排行 · ${DATA.asOf}</div></div><div class="tabs"><button class="chip ${state.rankMode==='increase'?'active':''}" data-rank="increase">增仓</button><button class="chip ${state.rankMode==='decrease'?'active':''}" data-rank="decrease">减仓</button></div></div><div class="filters" role="group" aria-label="增减仓统计口径"><button class="filter-btn" data-oi-basis="sample">已取得合约样本</button><button class="filter-btn" data-oi-basis="all">全合约合计</button></div><div class="chart-note" id="oi-coverage"></div><div class="ranking" id="ranking"></div><div class="chart-note">单位：手。已取得合约样本不代表交易所全合约；两个口径分别排行。<br>持仓增减不等同方向性资金流。本栏比较当前覆盖品种，不随单个合约选择变化。</div></section>`};
-ranking=function(){
- const basis=state.rankBasis||'sample',eligible=DATA.markets.map(m=>openInterestObservation(m,basis)).filter(Boolean);
- const rows=eligible.filter(r=>state.rankMode==='increase'?r.value>0:r.value<0).sort((a,b)=>state.rankMode==='increase'?b.value-a.value:a.value-b.value).slice(0,6);
- const max=Math.max(...rows.map(r=>Math.abs(r.value)),1),scope=basis==='all'?'全合约合计':'已取得合约样本';
- $('#oi-coverage').textContent=`${scope} · 可计算 ${eligible.length} / ${DATA.markets.length} 个品种；缺失或重复合约不补零。`;
- $('#ranking').innerHTML=rows.length?rows.map((r,i)=>{const m=r.market;return `<button class="rank-row" data-select="${esc(m.code)}" title="${scope}${r.count==null?'':' · '+r.count+' 个同日合约'}"><span class="rank-number">0${i+1}</span><span class="rank-name">${esc(m.name)}${r.count==null?'':`<small class="metric-note">${r.count} 个合约</small>`}</span><span class="rank-track"><span style="width:${Math.abs(r.value)/max*100}%;background:${r.value>0?'#c78b77':'#8ea68b'}"></span></span><span class="rank-val ${color(r.value)}">${r.value>0?'+':''}${compact(r.value)}</span></button>`}).join(''):`<p class="empty">${!eligible.length?(basis==='all'?'本次未取得可核实的全合约持仓变化；可切换“已取得合约样本”查看。':'本次缺少可计算的同日合约持仓变化。'):`可计算的 ${eligible.length} 个品种中，暂无${state.rankMode==='increase'?'增仓':'减仓'}样本。`}</p>`;
- $$('[data-oi-basis]').forEach(b=>{const active=b.dataset.oiBasis===basis;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));b.onclick=()=>{state.rankBasis=b.dataset.oiBasis;ranking()}});
- bindSelection($('#ranking'));
-};
 
 // Independent evidence, never an extra vote in the price/position label.
 function researchInventoryChecks(m){
