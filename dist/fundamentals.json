@@ -1,7 +1,7 @@
 {
   "schema": "fundamentals-v1",
-  "asOf": "2026-11-09",
-  "checkedAt": "2026-11-10T04:50:07+08:00",
+  "asOf": "2026-11-11",
+  "checkedAt": "2026-11-12T10:05:45+08:00",
   "inventories": [
     {
       "id": "SHFE官方:cu:receipt:仓库",
@@ -3269,6 +3269,20 @@
           "change": -950.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 3450.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 3400.0,
+          "change": -50.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -3400,6 +3414,20 @@
           "date": "2026-11-09",
           "value": 999.0,
           "change": -11.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 999.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 999.0,
+          "change": 0.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
@@ -3619,6 +3647,20 @@
           "change": -160.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 52323.0,
+          "change": -150.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 51952.0,
+          "change": -371.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -3752,6 +3794,20 @@
           "change": 0.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 27230.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 27292.0,
+          "change": 62.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -3862,6 +3918,20 @@
           "date": "2026-11-09",
           "value": 1644.0,
           "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 1644.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 2223.0,
+          "change": 579.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
@@ -3997,6 +4067,20 @@
           "change": 369.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 87377.0,
+          "change": 2688.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 85760.0,
+          "change": -1617.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -4120,6 +4204,20 @@
         {
           "date": "2026-11-09",
           "value": 900.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 800.0,
+          "change": -100.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 800.0,
           "change": 0.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
@@ -4844,6 +4942,20 @@
           "change": -1483.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 2520.0,
+          "change": -324.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 2520.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -4968,6 +5080,20 @@
           "date": "2026-11-09",
           "value": 49933.0,
           "change": -2055.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 49385.0,
+          "change": -548.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 47540.0,
+          "change": -1845.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
@@ -5096,6 +5222,20 @@
           "change": -751.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 56206.0,
+          "change": -941.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 54600.0,
+          "change": -1606.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -5220,6 +5360,20 @@
           "date": "2026-11-09",
           "value": 6319.0,
           "change": 24.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 6319.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 7188.0,
+          "change": 869.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
@@ -5348,6 +5502,20 @@
           "change": 380.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 87911.0,
+          "change": 259.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 87755.0,
+          "change": -156.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -5472,6 +5640,20 @@
           "date": "2026-11-09",
           "value": 1558.0,
           "change": 118.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 1494.0,
+          "change": -64.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 1652.0,
+          "change": 158.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
@@ -5600,6 +5782,20 @@
           "change": -2400.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 206016.0,
+          "change": 8404.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 208432.0,
+          "change": 2416.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -5726,6 +5922,20 @@
           "change": -452.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 8584.0,
+          "change": -30.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 9424.0,
+          "change": 840.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -5848,6 +6058,20 @@
         },
         {
           "date": "2026-11-09",
+          "value": 118404.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 118404.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
           "value": 118404.0,
           "change": 0.0,
           "previous": null,
@@ -5978,6 +6202,20 @@
           "change": 6364.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 1331037.0,
+          "change": -47968.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 1327046.0,
+          "change": -3991.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -6100,6 +6338,20 @@
         },
         {
           "date": "2026-11-09",
+          "value": 32931.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 32931.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
           "value": 32931.0,
           "change": 0.0,
           "previous": null,
@@ -6230,6 +6482,20 @@
           "change": -1473.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 218774.0,
+          "change": 19670.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 216127.0,
+          "change": -2647.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -6356,6 +6622,20 @@
           "change": -58.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 55317.0,
+          "change": -236.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 55016.0,
+          "change": -301.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -6478,6 +6758,20 @@
         },
         {
           "date": "2026-11-09",
+          "value": 0.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 0.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
           "value": 0.0,
           "change": 0.0,
           "previous": null,
@@ -6608,6 +6902,20 @@
           "change": 30.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 30.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 30.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -6731,6 +7039,20 @@
         {
           "date": "2026-11-09",
           "value": 0.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 900.0,
+          "change": 900.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 900.0,
           "change": 0.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
@@ -6860,6 +7182,20 @@
           "change": -1100.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 4020.0,
+          "change": -100.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 3338.0,
+          "change": -682.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -6982,6 +7318,20 @@
         },
         {
           "date": "2026-11-09",
+          "value": 27.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 27.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
           "value": 27.0,
           "change": 0.0,
           "previous": null,
@@ -7112,6 +7462,20 @@
           "change": 6.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 4210.0,
+          "change": 173.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 4594.0,
+          "change": 384.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -7236,6 +7600,20 @@
           "date": "2026-11-09",
           "value": 11859.0,
           "change": 8130.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 16843.0,
+          "change": 4984.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 16843.0,
+          "change": 0.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
@@ -7364,6 +7742,20 @@
           "change": -700.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 27260.0,
+          "change": -364.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 26759.0,
+          "change": -501.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -7488,6 +7880,20 @@
           "date": "2026-11-09",
           "value": 23760.0,
           "change": 2040.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 23810.0,
+          "change": 50.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 23296.0,
+          "change": -514.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
@@ -7616,6 +8022,20 @@
           "change": -50.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 18920.0,
+          "change": 240.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 18140.0,
+          "change": -780.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -7740,6 +8160,20 @@
           "date": "2026-11-09",
           "value": 2593.0,
           "change": 17.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 2593.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 2593.0,
+          "change": 0.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
@@ -7868,6 +8302,20 @@
           "change": -25.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 5161.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 5148.0,
+          "change": -13.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
       ],
       "note": "东方财富仓单转载口径，当前主采集来源；历史ID保留，与其他库存口径不拼接。",
@@ -7992,6 +8440,20 @@
           "date": "2026-11-09",
           "value": 427.0,
           "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-10",
+          "value": 427.0,
+          "change": 0.0,
+          "previous": null,
+          "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
+        },
+        {
+          "date": "2026-11-11",
+          "value": 929.0,
+          "change": 502.0,
           "previous": null,
           "sourceUrl": "https://data.eastmoney.com/ifdata/kcsj.html"
         }
