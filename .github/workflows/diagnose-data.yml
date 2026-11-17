@@ -1,0 +1,40 @@
+name: Diagnose data connectivity (read only)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install requests==2.32.3
+      - name: Compare Eastmoney requests without updating published data
+        shell: python
+        run: |
+          import requests, concurrent.futures, json, os
+          common={'pn':1,'pz':100,'fields':'f12,f13,f14','fltt':2,'np':1}
+          all_venues='m:113,m:114,m:115,m:142,m:225'
+          cases=[('original','https://push2.eastmoney.com/api/qt/clist/get',dict(common,fs=all_venues)),
+                 ('sorted','https://push2.eastmoney.com/api/qt/clist/get',dict(common,fs=all_venues,fid='f12',po=1)),
+                 ('shfe','https://push2.eastmoney.com/api/qt/clist/get',dict(common,fs='m:113',fid='f12',po=1)),
+                 ('dce','https://push2.eastmoney.com/api/qt/clist/get',dict(common,fs='m:114',fid='f12',po=1)),
+                 ('backup','https://82.push2.eastmoney.com/api/qt/clist/get',dict(common,fs=all_venues,fid='f12',po=1)),
+                 ('daily','https://push2his.eastmoney.com/api/qt/stock/kline/get',{'secid':'113.cu2612','klt':101,'fqt':0,'beg':'20261101','end':'20261116','fields1':'f1,f2,f3,f4,f5,f6','fields2':'f51,f52,f53,f54,f55,f56,f57,f63,f65,f66,f67,f69'})]
+          def probe(case):
+              name,url,params=case
+              try:
+                  r=requests.get(url,params=params,timeout=(8,20),headers={'User-Agent':'Mozilla/5.0','Referer':'https://quote.eastmoney.com/center/gridlist.html#futures_qh'})
+                  result={'case':name,'http':r.status_code,'server':r.headers.get('server')}
+                  if r.status_code==200:
+                      d=r.json();data=d.get('data') or {};result.update(rc=d.get('rc'),total=data.get('total'),bars=len(data.get('klines',[])))
+                  else:result['body']=r.text[:100]
+                  return result
+              except Exception as e:return {'case':name,'error':type(e).__name__}
+          with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:results=list(pool.map(probe,cases))
+          print(json.dumps(results,ensure_ascii=False,indent=2))
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write('Read-only connectivity diagnostic; no published data changed.\n\n```json\n'+json.dumps(results,indent=2)+'\n```\n')
