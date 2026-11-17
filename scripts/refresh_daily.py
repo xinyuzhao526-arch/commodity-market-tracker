@@ -211,6 +211,10 @@ def report(result):
             out.write(f"### 商品市场追踪盘后更新\n\n状态：`{result['status']}`\n\n最新完整快照：**{result.get('asOf', '未改变')}**\n\n")
             if result['status'] == 'no-published-report':
                 out.write('目标日期尚无可读取的上期所正式报告（可能休市或尚未发布）；保留上一份快照。\n')
+            elif result['status'] == 'failed':
+                out.write('本次未发布新行情，线上仍保留以上日期的完整快照。'
+                          '网络失败会在下次盘后或次日上午补更任务重试；数据校验错误需要排查。\n\n')
+                out.write('错误：' + str(result.get('error', '未提供详情'))[:2000] + '\n')
 
 
 def main():

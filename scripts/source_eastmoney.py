@@ -48,18 +48,33 @@ def listings():
             return _listings(endpoint)
         except requests.RequestException:
             if index == len(LIST_ENDPOINTS) - 1:
-                raise
+                break
             print('Eastmoney contract-list endpoint unavailable; restarting on backup host.', flush=True)
+    print('Combined contract list unavailable; reading each venue separately.', flush=True)
+    result = {}
+    for venue in VENUES:
+        for index, endpoint in enumerate(LIST_ENDPOINTS):
+            try:
+                rows = _listings(endpoint, venue)
+                break
+            except requests.RequestException:
+                if index == len(LIST_ENDPOINTS) - 1:
+                    raise
+        if result.keys() & rows.keys():
+            raise ValueError('Duplicate listing across venues')
+        result.update(rows)
+    return result
 
 
-def _listings(endpoint):
+def _listings(endpoint, venue=None):
     result = {}
     total = None
     page = 1
     while total is None or len(result) < total:
         doc = get_json(endpoint, {'pn': page, 'pz': 100,
-                             'fs': 'm:113,m:114,m:115,m:142,m:225',
-                             'fields': 'f12,f13,f14', 'fltt': 2, 'np': 1})
+                             'fs': f'm:{venue}' if venue else 'm:113,m:114,m:115,m:142,m:225',
+                             'fields': 'f12,f13,f14', 'fltt': 2, 'np': 1,
+                             'fid': 'f12', 'po': 1})
         data = doc.get('data') or {}
         if total is None:
             total = int(data['total'])
@@ -71,6 +86,8 @@ def _listings(endpoint):
         if not rows:
             raise ValueError('Missing contract listing page')
         for row in rows:
+            if venue is not None and int(row['f13']) != venue:
+                raise ValueError('Listing venue mismatch')
             key = f"{row['f13']}.{row['f12']}"
             if key in result:
                 raise ValueError('Duplicate listing across pages')
@@ -208,12 +225,18 @@ def build(root, day, start, workers=8):
                 for bar in future.result():
                     frames.setdefault(bar['code'], {}).setdefault(bar['date'], {})[bar['contract']] = bar
             except Exception as exc:
-                errors.append({'secid': futures[future], 'error': str(exc)[:200]})
+                errors.append({'secid': futures[future], 'error': str(exc)[:200],
+                               'transport': isinstance(exc, requests.RequestException)})
             completed += 1
             if completed % 100 == 0:
                 print(f'Eastmoney daily contracts {completed}/{len(jobs)}', flush=True)
     if errors:
-        raise ValueError('Incomplete Eastmoney contract downloads: ' + json.dumps(errors[:8]))
+        message = 'Incomplete Eastmoney contract downloads: ' + json.dumps(errors[:8])
+        # Preserve transport classification so the atomic refresh can retry the
+        # batch and reuse successful dated downloads. Invalid data must not retry.
+        if all(e['transport'] for e in errors):
+            raise requests.RequestException(message)
+        raise ValueError(message)
     calendar = sorted({d for code in frames for d in frames[code]})
     markets = []
     for code, old in products.items():

@@ -1,6 +1,8 @@
 """Vendor boundaries: fixed months, signed quantities and provenance."""
 import copy
+import json
 import sys
+import tempfile
 from pathlib import Path
 import unittest
 from unittest.mock import patch
@@ -82,13 +84,45 @@ class EastmoneyTests(unittest.TestCase):
     def test_all_hosts_failing_remains_a_failure(self):
         with patch.object(em, 'get_json', side_effect=em.requests.HTTPError('502')) as get:
             with self.assertRaises(em.requests.HTTPError): em.listings()
-        self.assertEqual(get.call_count, len(em.LIST_ENDPOINTS))
+        self.assertEqual(get.call_count, 2 * len(em.LIST_ENDPOINTS))
 
     def test_invalid_pagination_is_not_hidden_by_failover(self):
         first = {'data': {'total': 1, 'diff': []}}
         with patch.object(em, 'get_json', return_value=first) as get:
             with self.assertRaisesRegex(ValueError, 'Missing'): em.listings()
         self.assertEqual(get.call_count, 1)
+
+    def test_batch_transport_errors_remain_retryable_but_invalid_data_does_not(self):
+        listing = {'113.cu2612': {'f12': 'cu2612', 'f13': 113},
+                   '113.cu2701': {'f12': 'cu2701', 'f13': 113}}
+        for failures, expected in [([em.requests.ConnectionError('offline')]*2, em.requests.RequestException),
+                                   ([em.requests.ConnectionError('offline'), ValueError('bad OHLC')], ValueError)]:
+            with self.subTest(expected=expected), tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp);(root/'dist').mkdir()
+                (root/'dist/data.json').write_text(json.dumps({'markets':[{'code':'cu','exchange':'SHFE'}]}))
+                with patch.object(em, 'listings', return_value=listing), \
+                     patch.object(em, 'fetch_bars', side_effect=failures):
+                    with self.assertRaises(expected): em.build(root, '2026-11-16', '2026-07-19', workers=1)
+
+    def test_sorted_listing_and_all_venue_fallback_require_complete_coverage(self):
+        packets=[{'data':{'total':1,'diff':[{'f12':'x2701','f13':venue}]}} for venue in em.VENUES]
+        failures=[em.requests.HTTPError('502')]*len(em.LIST_ENDPOINTS)
+        with patch.object(em, 'get_json', side_effect=failures+packets) as get:
+            result=em.listings()
+        self.assertEqual(len(result),len(em.VENUES))
+        calls=get.call_args_list
+        self.assertTrue(all(c.args[1]['fid']=='f12' and c.args[1]['po']==1 for c in calls))
+        self.assertEqual([c.args[1]['fs'] for c in calls[len(em.LIST_ENDPOINTS):]],
+                         [f'm:{venue}' for venue in em.VENUES])
+        # One failed venue cannot silently become a partial combined listing.
+        with patch.object(em, 'get_json', side_effect=failures+packets[:-1]+failures):
+            with self.assertRaises(em.requests.HTTPError):em.listings()
+
+    def test_wrong_venue_in_split_listing_is_rejected(self):
+        packet={'data':{'total':1,'diff':[{'f12':'cu2612','f13':114}]}}
+        with patch.object(em, 'get_json', return_value=packet):
+            with self.assertRaisesRegex(ValueError,'venue mismatch'):
+                em._listings(em.LIST,113)
 
 
 if __name__ == '__main__':

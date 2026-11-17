@@ -4,6 +4,8 @@ on:
   schedule:
     # UTC; Shanghai 18:17 and 20:17, Monday-Friday. Avoid the hourly rush.
     - cron: '17 10,12 * * 1-5'
+    # Catch up the previous close on Tue-Sat at 09:23 Shanghai.
+    - cron: '23 1 * * 2-6'
   workflow_dispatch:
     inputs:
       as_of:
