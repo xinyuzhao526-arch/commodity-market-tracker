@@ -29,8 +29,12 @@ concurrency:
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    # Live side-by-side probes: this pool currently reaches Eastmoney reliably.
+    runs-on: windows-latest
     timeout-minutes: 90
+    defaults:
+      run:
+        shell: bash
     permissions:
       contents: write
     env:
@@ -47,8 +51,8 @@ jobs:
         id: raw_cache
         with:
           path: data/raw
-          key: commodity-raw-v2-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: commodity-raw-v2-
+          key: commodity-raw-v3-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: commodity-raw-v3-${{ runner.os }}-
       - name: Verify research arithmetic and refresh transaction
         run: |
           python scripts/check_analysis.py
@@ -91,7 +95,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: data/raw
-          key: commodity-raw-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          key: commodity-raw-v3-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Build offline HTML
         run: python scripts/export_html.py --output dist/market-tracker.html
       - name: Commit the complete snapshot
