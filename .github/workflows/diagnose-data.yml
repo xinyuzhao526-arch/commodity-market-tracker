@@ -18,7 +18,9 @@ jobs:
           import requests, concurrent.futures, json, os
           common={'pn':1,'pz':100,'fields':'f12,f13,f14','fltt':2,'np':1}
           all_venues='m:113,m:114,m:115,m:142,m:225'
-          cases=[('original','https://push2.eastmoney.com/api/qt/clist/get',dict(common,fs=all_venues)),
+          cases=[('production-exact','https://push2.eastmoney.com/api/qt/clist/get',{'pn':1,'pz':100,'fs':all_venues,'fields':'f12,f13,f14','fltt':2,'np':1}),
+                 ('production-sorted','https://push2.eastmoney.com/api/qt/clist/get',{'pn':1,'pz':100,'fs':all_venues,'fields':'f12,f13,f14','fltt':2,'np':1,'fid':'f12','po':1}),
+                 ('original','https://push2.eastmoney.com/api/qt/clist/get',dict(common,fs=all_venues)),
                  ('sorted','https://push2.eastmoney.com/api/qt/clist/get',dict(common,fs=all_venues,fid='f12',po=1)),
                  ('shfe','https://push2.eastmoney.com/api/qt/clist/get',dict(common,fs='m:113',fid='f12',po=1)),
                  ('dce','https://push2.eastmoney.com/api/qt/clist/get',dict(common,fs='m:114',fid='f12',po=1)),
